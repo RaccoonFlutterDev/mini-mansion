@@ -1,7 +1,8 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
-import 'package:mini_mansion/constant/functions.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -10,43 +11,94 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  @override
-  void initState() {
-    WidgetsBinding.instance.addObserver(this);
-    Functions.updateStatusBarColor();
-    super.initState();
-  }
-
-  @override
-  void didChangePlatformBrightness() {
-    super.didChangePlatformBrightness();
-    Functions.updateStatusBarColor();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
+class _MyHomePageState extends State<MyHomePage> {
+  var currentSlide = 0.obs;
+  final CarouselController _controller = CarouselController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DraggableHome(
+      alwaysShowLeadingAndAction: true,
+      headerExpandedHeight: 0.4.h,
+      curvedBodyRadius: 24.r,
+      leading: const Icon(Icons.menu_sharp),
+      title: const SizedBox.shrink(),
+      actions: [
+        IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
+      ],
+      headerWidget: headerWidget(context),
+      body: const [],
+      fullyStretchable: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          MaterialButton(
-            onPressed: () {
-              print(Get.width);
-              print(Get.height);
-            },
-            child: const Text('Click Me'),
-          ),
-        ],
-      ),
+      appBarColor: Theme.of(context).primaryColor,
     );
+  }
+
+  Widget headerWidget(BuildContext context) {
+    return Stack(children: [
+      CarouselSlider(
+        options: CarouselOptions(
+          height: Get.height,
+          viewportFraction: 1,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration: const Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: false,
+          onPageChanged: (index, reason) {
+            currentSlide.value = index;
+          },
+        ),
+        items: [1, 2, 3, 4, 5].map((i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: Center(
+                  child: Text(
+                    'text $i',
+                    style: const TextStyle(fontSize: 16.0),
+                  ),
+                ),
+              );
+            },
+          );
+        }).toList(),
+      ),
+      Positioned(
+        bottom: 32.h,
+        right: 16.w,
+        child: Obx(() {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [1, 2, 3, 4, 5].asMap().entries.map((entry) {
+              return GestureDetector(
+                onTap: () => _controller.animateToPage(entry.key),
+                child: Container(
+                  width: 12.0,
+                  height: 12.0,
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 4.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: (Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black)
+                        .withOpacity(
+                      currentSlide.value == entry.key ? 0.9 : 0.4,
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          );
+        }),
+      ),
+    ]);
   }
 }
