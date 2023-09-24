@@ -69,20 +69,22 @@ class _MyDashboardState extends State<MyDashboard> with WidgetsBindingObserver {
             FlashyTabBarItem(
               activeColor: Theme.of(context).primaryColor,
               inactiveColor: Theme.of(context).hintColor,
-              icon: const Icon(Icons.event),
-              title: const Text('Events'),
+              icon: const Icon(Icons.favorite_outline_outlined),
+              title: const Text('Trips'),
             ),
             FlashyTabBarItem(
               activeColor: Theme.of(context).primaryColor,
               inactiveColor: Theme.of(context).hintColor,
               icon: const Icon(Icons.search),
-              title: const Text('Search'),
+              title: const Text('Explore'),
             ),
             FlashyTabBarItem(
               activeColor: Theme.of(context).primaryColor,
               inactiveColor: Theme.of(context).hintColor,
-              icon: const Icon(Icons.highlight),
-              title: const Text('Highlights'),
+              icon: const Icon(
+                Icons.person_3_outlined,
+              ),
+              title: const Text('Profile'),
             ),
           ],
         );

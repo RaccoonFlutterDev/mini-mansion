@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mini_mansion/constant/theme.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -13,7 +16,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var currentSlide = 0.obs;
+  var sliderImages = [].obs;
   final CarouselController _controller = CarouselController();
+  @override
+  void initState() {
+    sliderImages.value = [
+      'https://e0.pxfuel.com/wallpapers/951/799/desktop-wallpaper-hotel-room-bed-furniture-luxury-widescreen-16-9-background-hotel-room.jpg',
+      'https://images6.alphacoders.com/329/329921.jpg',
+      'https://img.freepik.com/free-photo/luxury-modern-style-bedroom-interior-hotel-bedroom-generative-ai-illustration_1258-151610.jpg',
+      'https://img.freepik.com/premium-photo/light-generative-ai-luxurious-hotel-room_28914-16061.jpg'
+    ];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DraggableHome(
@@ -42,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
           enableInfiniteScroll: true,
           reverse: false,
           autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayInterval: const Duration(seconds: 10),
           autoPlayAnimationDuration: const Duration(milliseconds: 800),
           autoPlayCurve: Curves.fastOutSlowIn,
           enlargeCenterPage: false,
@@ -50,22 +65,32 @@ class _MyHomePageState extends State<MyHomePage> {
             currentSlide.value = index;
           },
         ),
-        items: [1, 2, 3, 4, 5].map((i) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
+        items: sliderImages.map((i) {
+          return CachedNetworkImage(
+            imageUrl: i,
+            placeholder: (context, url) => Shimmer.fromColors(
+              baseColor: Theme.of(context).cardColor,
+              highlightColor: AppTheme.primary.withOpacity(0.5),
+              enabled: true,
+              child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(16.r),
+                  color: Colors.white,
                 ),
-                child: Center(
-                  child: Text(
-                    'text $i',
-                    style: const TextStyle(fontSize: 16.0),
-                  ),
+              ),
+            ),
+            errorWidget: (context, url, error) => Shimmer.fromColors(
+              baseColor: Theme.of(context).cardColor,
+              highlightColor: AppTheme.primary.withOpacity(0.5),
+              enabled: true,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.r),
+                  color: Colors.white,
                 ),
-              );
-            },
+              ),
+            ),
+            fit: BoxFit.cover,
           );
         }).toList(),
       ),
@@ -76,22 +101,20 @@ class _MyHomePageState extends State<MyHomePage> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            children: [1, 2, 3, 4, 5].asMap().entries.map((entry) {
+            children: sliderImages.asMap().entries.map((entry) {
               return GestureDetector(
                 onTap: () => _controller.animateToPage(entry.key),
-                child: Container(
-                  width: 12.0,
-                  height: 12.0,
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 4.0),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 800),
+                  curve: Curves.fastOutSlowIn,
+                  width: currentSlide.value == entry.key ? 24.w : 12.w,
+                  height: 12.h,
+                  margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 4.w),
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black)
-                        .withOpacity(
-                      currentSlide.value == entry.key ? 0.9 : 0.4,
-                    ),
+                    borderRadius: BorderRadius.circular(12.r),
+                    color: currentSlide.value == entry.key
+                        ? AppTheme.primary
+                        : AppTheme.textHint,
                   ),
                 ),
               );
