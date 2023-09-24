@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
       headerWidget: headerWidget(context),
       body: bodyWidget(context),
-      fullyStretchable: true,
+      fullyStretchable: false,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBarColor: Theme.of(context).primaryColor,
     );
@@ -227,7 +227,13 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (context, index) {
             return LargeCard(
               onPressed: () {
-                Get.to(HotelDetails(imageUrl: sliderImages[index]));
+                Get.to(
+                  HotelDetails(imageUrl: sliderImages[index]),
+                  transition: Transition.leftToRight,
+                  duration: const Duration(
+                    milliseconds: 500,
+                  ),
+                );
               },
               width: Get.width - 50.w,
               height: 200.h,

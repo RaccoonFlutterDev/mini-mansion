@@ -54,28 +54,28 @@ class MyApp extends StatelessWidget {
               ),
               headlineMedium: GoogleFonts.oxygen(
                 color: AppTheme.textLight,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
               ),
               headlineSmall: GoogleFonts.oxygen(
-                color: AppTheme.textLight,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w400,
-              ),
-              bodyLarge: GoogleFonts.oxygen(
                 color: AppTheme.textLight,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
               ),
+              bodyLarge: GoogleFonts.oxygen(
+                color: AppTheme.textLight,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+              ),
               bodyMedium: GoogleFonts.oxygen(
                 color: AppTheme.textLight,
-                fontSize: 12.sp,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
               ),
               bodySmall: GoogleFonts.oxygen(
                 color: AppTheme.textLight,
                 fontSize: 12.sp,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
               ),
               labelLarge: GoogleFonts.oxygen(
                 color: AppTheme.textHint,
@@ -112,28 +112,28 @@ class MyApp extends StatelessWidget {
               ),
               headlineMedium: GoogleFonts.oxygen(
                 color: AppTheme.textDark,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
               ),
               headlineSmall: GoogleFonts.oxygen(
-                color: AppTheme.textDark,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w400,
-              ),
-              bodyLarge: GoogleFonts.oxygen(
                 color: AppTheme.textDark,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
               ),
+              bodyLarge: GoogleFonts.oxygen(
+                color: AppTheme.textDark,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+              ),
               bodyMedium: GoogleFonts.oxygen(
                 color: AppTheme.textDark,
-                fontSize: 12.sp,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
               ),
               bodySmall: GoogleFonts.oxygen(
                 color: AppTheme.textDark,
                 fontSize: 12.sp,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
               ),
               labelLarge: GoogleFonts.oxygen(
                 color: AppTheme.textHint,
