@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/home/hotel_details.dart';
 import 'package:mini_mansion/widgets/button.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -198,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Near by',
+                'Top Hotels',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               TextButton(
@@ -225,7 +226,9 @@ class _MyHomePageState extends State<MyHomePage> {
           itemCount: sliderImages.length,
           itemBuilder: (context, index) {
             return LargeCard(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(HotelDetails(imageUrl: sliderImages[index]));
+              },
               width: Get.width - 50.w,
               height: 200.h,
               color: Theme.of(context).scaffoldBackgroundColor,
@@ -263,7 +266,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       ListView.builder(
         shrinkWrap: true,
-        padding: EdgeInsets.only(top: 8.w,bottom: 79.h,left: 8.w,right: 8.w),
+        padding: EdgeInsets.only(top: 8.w, bottom: 79.h, left: 8.w, right: 8.w),
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.vertical,
         itemCount: sliderImages.length,
