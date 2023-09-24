@@ -57,36 +57,53 @@ class _MyDashboardState extends State<MyDashboard> with WidgetsBindingObserver {
           return pages[currentIndex.value];
         },
       ),
-      bottomNavigationBar: Obx(() {
-        return FlashyTabBar(
-          height: 55.h,
-          iconSize: 20.sp,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          selectedIndex: currentIndex.value,
-          showElevation: false,
-          onItemSelected: (index) => currentIndex.value = index,
-          items: [
-            FlashyTabBarItem(
-              activeColor: Theme.of(context).primaryColor,
-              inactiveColor: Theme.of(context).hintColor,
-              icon: const Icon(Icons.favorite_outline_outlined),
-              title: const Text('Trips'),
-            ),
-            FlashyTabBarItem(
-              activeColor: Theme.of(context).primaryColor,
-              inactiveColor: Theme.of(context).hintColor,
-              icon: const Icon(Icons.search),
-              title: const Text('Explore'),
-            ),
-            FlashyTabBarItem(
-              activeColor: Theme.of(context).primaryColor,
-              inactiveColor: Theme.of(context).hintColor,
-              icon: const Icon(
-                Icons.person_3_outlined,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
+      floatingActionButton: Obx(() {
+        return Container(
+          margin: EdgeInsets.all(8.w),
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.r),
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, 0),
+                blurRadius: 5,
+                spreadRadius: 0.25,
+                color: Theme.of(context).shadowColor.withOpacity(0.25),
+              )
+            ],
+          ),
+          child: FlashyTabBar(
+            height: 55.h,
+            iconSize: 20.sp,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            selectedIndex: currentIndex.value,
+            showElevation: false,
+            onItemSelected: (index) => currentIndex.value = index,
+            items: [
+              FlashyTabBarItem(
+                activeColor: Theme.of(context).primaryColor,
+                inactiveColor: Theme.of(context).hintColor,
+                icon: const Icon(Icons.favorite_outline_outlined),
+                title: const Text('Trips'),
               ),
-              title: const Text('Profile'),
-            ),
-          ],
+              FlashyTabBarItem(
+                activeColor: Theme.of(context).primaryColor,
+                inactiveColor: Theme.of(context).hintColor,
+                icon: const Icon(Icons.search),
+                title: const Text('Explore'),
+              ),
+              FlashyTabBarItem(
+                activeColor: Theme.of(context).primaryColor,
+                inactiveColor: Theme.of(context).hintColor,
+                icon: const Icon(
+                  Icons.person_3_outlined,
+                ),
+                title: const Text('Profile'),
+              ),
+            ],
+          ),
         );
       }),
     );

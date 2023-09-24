@@ -45,6 +45,7 @@ dependencies:
   draggable_home: ^1.0.4
   flashy_tab_bar2: ^0.0.6
   carousel_slider: ^4.2.1
+  flutter_pannable_rating_bar: ^2.7.2+1
 
 dev_dependencies:
   flutter_test:
