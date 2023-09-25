@@ -5,9 +5,12 @@ import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/theme.dart';
 import 'package:mini_mansion/widgets/button.dart';
+import 'package:mini_mansion/widgets/cards.dart';
 import 'package:rating_summary/rating_summary.dart';
+import 'package:readmore/readmore.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HotelDetails extends StatelessWidget {
@@ -64,6 +67,53 @@ class HotelDetails extends StatelessWidget {
       ],
       headerWidget: headerWidget(context),
       body: [
+        ListTile(
+          dense: true,
+          title: Text(
+            'Grand Royal Hotel',
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
+          subtitle: Text(
+            'Wembley, Landon',
+            maxLines: 1,
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+          trailing: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '\$180',
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
+              Text(
+                'Per Night',
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+            ],
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: Text(
+              'Summary',
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+          child: ReadMoreText(
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+            trimLines: 2,
+            colorClickableText: AppTheme.primary,
+            trimMode: TrimMode.Line,
+            trimCollapsedText: 'Show more',
+            trimExpandedText: 'Show less',
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+        ),
         RatingSummary(
           counter: 13,
           color: AppTheme.primary,
@@ -80,13 +130,115 @@ class HotelDetails extends StatelessWidget {
           labelCounterThreeStars: 'Location',
           labelCounterTwoStars: 'Price',
           labelCounterOneStars: 'Security',
-          labelCounterFiveStarsStyle: Theme.of(context).textTheme.headlineMedium!,
-          labelCounterFourStarsStyle: Theme.of(context).textTheme.headlineMedium!,
-          labelCounterOneStarsStyle: Theme.of(context).textTheme.headlineMedium!,
-          labelCounterThreeStarsStyle: Theme.of(context).textTheme.headlineMedium!,
-          labelCounterTwoStarsStyle: Theme.of(context).textTheme.headlineMedium!,
+          labelCounterFiveStarsStyle:
+              Theme.of(context).textTheme.headlineMedium!,
+          labelCounterFourStarsStyle:
+              Theme.of(context).textTheme.headlineMedium!,
+          labelCounterOneStarsStyle:
+              Theme.of(context).textTheme.headlineMedium!,
+          labelCounterThreeStarsStyle:
+              Theme.of(context).textTheme.headlineMedium!,
+          labelCounterTwoStarsStyle:
+              Theme.of(context).textTheme.headlineMedium!,
           labelStyle: Theme.of(context).textTheme.headlineLarge!,
-        )
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Rooms',
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'View All ',
+                          style: GoogleFonts.oxygen(
+                            fontSize: 12.sp,
+                            color: AppTheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: AppTheme.primary,
+                            size: 16.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Reviews',
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'View All ',
+                          style: GoogleFonts.oxygen(
+                            fontSize: 12.sp,
+                            color: AppTheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: AppTheme.primary,
+                            size: 16.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        ListView.builder(
+          shrinkWrap: true,
+          padding:
+              EdgeInsets.only(top: 8.w, bottom: 79.h, left: 8.w, right: 8.w),
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          itemCount: 2,
+          itemBuilder: (context, index) {
+            return ReviewCard(
+              onPressed: () {},
+              color: Theme.of(context).scaffoldBackgroundColor,
+              imageUrl: imageUrl,
+            );
+          },
+        ),
       ],
       fullyStretchable: false,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,

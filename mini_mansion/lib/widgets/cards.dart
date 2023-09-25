@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mini_mansion/constant/theme.dart';
 import 'package:mini_mansion/widgets/button.dart';
+import 'package:readmore/readmore.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LargeCard extends StatelessWidget {
@@ -330,6 +331,156 @@ class MediumCard extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ReviewCard extends StatelessWidget {
+  final VoidCallback onPressed;
+  final double borderRadius;
+  final Color color;
+  final String imageUrl;
+
+  ReviewCard({
+    super.key,
+    required this.onPressed,
+    this.borderRadius = 16,
+    required this.color,
+    required this.imageUrl,
+  });
+
+  var isFavorite = false.obs;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(8.r),
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(borderRadius.r),
+        color: Theme.of(context).scaffoldBackgroundColor,
+        boxShadow: [
+          BoxShadow(
+            offset: const Offset(0, 0),
+            blurRadius: 5,
+            spreadRadius: 0.25,
+            color: Theme.of(context).shadowColor.withOpacity(0.25),
+          )
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 75.w,
+                height: 75.w,
+                margin: EdgeInsets.all(8.r),
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(borderRadius.r),
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 0),
+                      blurRadius: 5,
+                      spreadRadius: 0.25,
+                      color: Theme.of(context).shadowColor.withOpacity(0.25),
+                    )
+                  ],
+                ),
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Theme.of(context).cardColor,
+                    highlightColor: AppTheme.primary.withOpacity(0.5),
+                    enabled: true,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16.r),
+                        color: color,
+                      ),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Shimmer.fromColors(
+                    baseColor: Theme.of(context).cardColor,
+                    highlightColor: AppTheme.primary.withOpacity(0.5),
+                    enabled: true,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16.r),
+                        color: color,
+                      ),
+                    ),
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Flexible(
+                child: ListTile(
+                  dense: true,
+                  title: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hamza Basheer',
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      ),
+                    ],
+                  ),
+                  subtitle: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Last Updated',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                            TextSpan(
+                              text: ' 24 Sep, 2023',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            )
+                          ],
+                        ),
+                      ),
+                      PannableRatingBar.builder(
+                        rate: 4.5,
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return RatingWidget(
+                            selectedColor: AppTheme.primary,
+                            unSelectedColor: AppTheme.textHint,
+                            child: Icon(
+                              Icons.star,
+                              size: 18.sp,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: ReadMoreText(
+              'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+              trimLines: 3,
+              colorClickableText: AppTheme.primary,
+              trimMode: TrimMode.Line,
+              trimCollapsedText: 'Show more',
+              trimExpandedText: 'Show less',
+              style: Theme.of(context).textTheme.labelMedium,
             ),
           ),
         ],

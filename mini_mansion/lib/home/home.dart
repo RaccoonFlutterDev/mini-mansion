@@ -204,12 +204,26 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               TextButton(
                 onPressed: () {},
-                child: Text(
-                  'View All',
-                  style: GoogleFonts.oxygen(
-                    fontSize: 12.sp,
-                    color: AppTheme.primary,
-                    fontWeight: FontWeight.bold,
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'View All ',
+                        style: GoogleFonts.oxygen(
+                          fontSize: 12.sp,
+                          color: AppTheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: AppTheme.primary,
+                          size: 16.sp,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -229,7 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Get.to(
                   HotelDetails(imageUrl: sliderImages[index]),
-                  transition: Transition.leftToRight,
+                  transition: Transition.rightToLeft,
                   duration: const Duration(
                     milliseconds: 500,
                   ),
@@ -257,12 +271,26 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               TextButton(
                 onPressed: () {},
-                child: Text(
-                  'View All',
-                  style: GoogleFonts.oxygen(
-                    fontSize: 12.sp,
-                    color: AppTheme.primary,
-                    fontWeight: FontWeight.bold,
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'View All ',
+                        style: GoogleFonts.oxygen(
+                          fontSize: 12.sp,
+                          color: AppTheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: AppTheme.primary,
+                          size: 16.sp,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
