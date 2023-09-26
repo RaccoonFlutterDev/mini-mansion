@@ -235,7 +235,8 @@ class HotelDetails extends StatelessWidget {
             return ReviewCard(
               onPressed: () {},
               color: Theme.of(context).scaffoldBackgroundColor,
-              imageUrl: imageUrl,
+              imageUrl:
+                  'https://thumbs.dreamstime.com/b/close-up-photo-confident-serious-intelligent-clever-smart-man-staring-you-intently-new-eyewear-isolated-over-color-grey-161081282.jpg',
             );
           },
         ),

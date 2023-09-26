@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/theme.dart';
 import 'package:mini_mansion/home/dashboard.dart';
+import 'package:mini_mansion/home/landing_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constant/variables.dart';
 
@@ -156,7 +157,7 @@ class MyApp extends StatelessWidget {
               tertiary: AppTheme.textDark,
             ),
           ),
-          home: const MyDashboard(),
+          home: const LandingScreen(),
         );
       },
     );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mini_mansion/constant/functions.dart';
+import 'package:mini_mansion/home/favorites.dart';
 
 import 'home.dart';
 
@@ -20,11 +21,7 @@ class _MyDashboardState extends State<MyDashboard> with WidgetsBindingObserver {
   @override
   void initState() {
     pages = [
-      Container(
-        width: Get.width,
-        height: Get.height,
-        color: Colors.amber,
-      ),
+      const FavoritesScreen(),
       const MyHomePage(),
       Container(
         width: Get.width,
@@ -52,6 +49,7 @@ class _MyDashboardState extends State<MyDashboard> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Obx(
         () {
           return pages[currentIndex.value];
@@ -86,7 +84,7 @@ class _MyDashboardState extends State<MyDashboard> with WidgetsBindingObserver {
                 activeColor: Theme.of(context).primaryColor,
                 inactiveColor: Theme.of(context).hintColor,
                 icon: const Icon(Icons.favorite_outline_outlined),
-                title: const Text('Trips'),
+                title: const Text('Favorites'),
               ),
               FlashyTabBarItem(
                 activeColor: Theme.of(context).primaryColor,
