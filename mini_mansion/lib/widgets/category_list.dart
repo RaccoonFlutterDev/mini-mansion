@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mini_mansion/constant/theme.dart';
 
 class CategoryList extends StatelessWidget {
   final RxBool isSelected;
@@ -21,10 +22,10 @@ class CategoryList extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          width: 2.r,
+          width: 1.w,
           color: isSelected.value == true
               ? Theme.of(context).primaryColor
-              : Theme.of(context).colorScheme.surface.withOpacity(0.5),
+              : AppTheme.textHint,
         ),
         color: Theme.of(context).scaffoldBackgroundColor,
       ),
