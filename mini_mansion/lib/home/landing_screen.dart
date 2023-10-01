@@ -76,7 +76,9 @@ class _LandingScreenState extends State<LandingScreen> {
                         )
                       ],
                     ),
-                    child: Column(children: [],),
+                    child: const Column(
+                      children: [],
+                    ),
                   ),
                 ),
               ),

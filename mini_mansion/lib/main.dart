@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mini_mansion/auth/membership_registration.dart';
 import 'package:mini_mansion/constant/theme.dart';
-import 'package:mini_mansion/home/dashboard.dart';
 import 'package:mini_mansion/home/landing_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constant/variables.dart';
@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
           },
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.system,
-          
           darkTheme: ThemeData(
             scaffoldBackgroundColor: AppTheme.backgroundDark,
             fontFamily: GoogleFonts.oxygen().debugLabel,
@@ -97,6 +96,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
               seedColor: AppTheme.primary,
               tertiary: AppTheme.textLight,
+              surface: AppTheme.textLight,
             ),
             useMaterial3: true,
           ),
@@ -155,9 +155,10 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
               seedColor: AppTheme.primary,
               tertiary: AppTheme.textDark,
+              surface: AppTheme.textDark,
             ),
           ),
-          home: const LandingScreen(),
+          home: const MembershipRegistration(),
         );
       },
     );
