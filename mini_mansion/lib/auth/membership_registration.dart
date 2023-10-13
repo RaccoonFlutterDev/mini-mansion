@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../widgets/category_list.dart';
 
@@ -33,6 +34,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
     },
   ];
   var currentProperty = 0.obs;
+  var accommodateValue = 1.obs;
+  var bathroomValue = 1.obs;
+  var bedroomValue = 1.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,6 +114,159 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.all(8.h),
+                child: Center(
+                  child: Text(
+                    'Rooms and details',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                ),
+              ),
+              Text(
+                'Accommodates',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              Text(
+                'The maximum number of people who can sleep comfortably given the total bed space and sofas.',
+                style: GoogleFonts.oxygen(
+                  color: AppTheme.textHint.withOpacity(0.75),
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      '01',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Expanded(
+                      child: Obx(() {
+                        return Slider(
+                          value: accommodateValue.value.toDouble(),
+                          min: 1,
+                          max: 15,
+                          divisions: 15,
+                          activeColor: AppTheme.primary,
+                          inactiveColor:
+                              Theme.of(context).colorScheme.tertiaryContainer,
+                          label: '${accommodateValue.value.round()}',
+                          onChanged: (double newValue) {
+                            accommodateValue.value = newValue.toInt();
+                          },
+                          semanticFormatterCallback: (double newValue) {
+                            return '$newValue';
+                          },
+                        );
+                      }),
+                    ),
+                    Text(
+                      '15',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                'Bathrooms',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              Text(
+                'Count only bathrooms on your property, not shared or common bathrooms in your building or complex.',
+                style: GoogleFonts.oxygen(
+                  color: AppTheme.textHint.withOpacity(0.75),
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      '01',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Expanded(
+                      child: Obx(() {
+                        return Slider(
+                          value: bathroomValue.value.toDouble(),
+                          min: 1,
+                          max: 15,
+                          divisions: 15,
+                          activeColor: AppTheme.primary,
+                          inactiveColor:
+                              Theme.of(context).colorScheme.tertiaryContainer,
+                          label: '${bathroomValue.value.round()}',
+                          onChanged: (double newValue) {
+                            bathroomValue.value = newValue.toInt();
+                          },
+                          semanticFormatterCallback: (double newValue) {
+                            return '$newValue';
+                          },
+                        );
+                      }),
+                    ),
+                    Text(
+                      '15',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                'Bedrooms',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              Text(
+                'If your property is a loft or studio, the number of bedrooms is zero.',
+                style: GoogleFonts.oxygen(
+                  color: AppTheme.textHint.withOpacity(0.75),
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      '01',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Expanded(
+                      child: Obx(() {
+                        return Slider(
+                          value: bedroomValue.value.toDouble(),
+                          min: 0,
+                          max: 15,
+                          divisions: 15,
+                          activeColor: AppTheme.primary,
+                          inactiveColor:
+                              Theme.of(context).colorScheme.tertiaryContainer,
+                          label: '${bedroomValue.value.round()}',
+                          onChanged: (double newValue) {
+                            bedroomValue.value = newValue.toInt();
+                          },
+                          semanticFormatterCallback: (double newValue) {
+                            return '$newValue';
+                          },
+                        );
+                      }),
+                    ),
+                    Text(
+                      '15',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -129,38 +286,32 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.h),
-                child: DropdownButtonFormField(
-                  items: const [
-                    DropdownMenuItem(
-                      value: 'pakistan',
-                      child: Text('Pakistan'),
-                    )
-                  ],
-                  isDense: true,
-                  onChanged: (value) {},
+                child: TextFormField(
+                  cursorColor: AppTheme.primary,
+                  keyboardType: TextInputType.name,
                   style: Theme.of(context).textTheme.bodySmall,
                   decoration: InputDecoration(
-                    label: const Text('Country'),
+                    label: const Text('Street Address'),
                     isDense: true,
                     hintStyle: Theme.of(context).textTheme.labelSmall,
                     labelStyle: Theme.of(context).textTheme.titleSmall,
                     alignLabelWithHint: true,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.primary,
@@ -171,31 +322,41 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.h),
-                child: TextFormField(
-                  cursorColor: AppTheme.primary,
-                  keyboardType: TextInputType.name,
+                child: DropdownButtonFormField(
+                  padding: EdgeInsets.zero,
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'pakistan',
+                      child: Text('Pakistan'),
+                    )
+                  ],
+                  isDense: true,
+                  onChanged: (value) {},
                   style: Theme.of(context).textTheme.bodySmall,
                   decoration: InputDecoration(
-                    label: const Text('Street Address'),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+                    label: const Text('Country'),
+                    isDense: true,
                     hintStyle: Theme.of(context).textTheme.labelSmall,
                     labelStyle: Theme.of(context).textTheme.titleSmall,
                     alignLabelWithHint: true,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.primary,
@@ -212,25 +373,26 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   style: Theme.of(context).textTheme.bodySmall,
                   decoration: InputDecoration(
                     label: const Text('City'),
+                    isDense: true,
                     hintStyle: Theme.of(context).textTheme.labelSmall,
                     labelStyle: Theme.of(context).textTheme.titleSmall,
                     alignLabelWithHint: true,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.primary,
@@ -250,25 +412,26 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                         style: Theme.of(context).textTheme.bodySmall,
                         decoration: InputDecoration(
                           label: const Text('State'),
+                          isDense: true,
                           hintStyle: Theme.of(context).textTheme.labelSmall,
                           labelStyle: Theme.of(context).textTheme.titleSmall,
                           alignLabelWithHint: true,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.r),
+                            borderRadius: BorderRadius.circular(8.r),
                             borderSide: BorderSide(
                               width: 1.w,
                               color: AppTheme.textHint,
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.r),
+                            borderRadius: BorderRadius.circular(8.r),
                             borderSide: BorderSide(
                               width: 1.w,
                               color: AppTheme.textHint,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.r),
+                            borderRadius: BorderRadius.circular(8.r),
                             borderSide: BorderSide(
                               width: 1.w,
                               color: AppTheme.primary,
@@ -288,25 +451,26 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                         style: Theme.of(context).textTheme.bodySmall,
                         decoration: InputDecoration(
                           label: const Text('Zip Code'),
+                          isDense: true,
                           hintStyle: Theme.of(context).textTheme.labelSmall,
                           labelStyle: Theme.of(context).textTheme.titleSmall,
                           alignLabelWithHint: true,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.r),
+                            borderRadius: BorderRadius.circular(8.r),
                             borderSide: BorderSide(
                               width: 1.w,
                               color: AppTheme.textHint,
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.r),
+                            borderRadius: BorderRadius.circular(8.r),
                             borderSide: BorderSide(
                               width: 1.w,
                               color: AppTheme.textHint,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.r),
+                            borderRadius: BorderRadius.circular(8.r),
                             borderSide: BorderSide(
                               width: 1.w,
                               color: AppTheme.primary,
@@ -318,9 +482,22 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   ),
                 ],
               ),
-              Text(
-                'Tell us about your property',
-                style: Theme.of(context).textTheme.headlineLarge,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'What’s unique and wonderful about your property?',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  Text(
+                    'Make it count, and make it sound inviting! Don’t worry, we’ll generate other languages using a standard translation template.',
+                    style: GoogleFonts.oxygen(
+                      color: AppTheme.textHint.withOpacity(0.75),
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.h),
@@ -330,25 +507,26 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   style: Theme.of(context).textTheme.bodySmall,
                   decoration: InputDecoration(
                     label: const Text('Owner Name'),
+                    isDense: true,
                     hintStyle: Theme.of(context).textTheme.labelSmall,
                     labelStyle: Theme.of(context).textTheme.titleSmall,
                     alignLabelWithHint: true,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.primary,
@@ -364,26 +542,27 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   keyboardType: TextInputType.name,
                   style: Theme.of(context).textTheme.bodySmall,
                   decoration: InputDecoration(
-                    label: const Text('Legal name of your property'),
+                    label: const Text('Name your property'),
+                    isDense: true,
                     hintStyle: Theme.of(context).textTheme.labelSmall,
                     labelStyle: Theme.of(context).textTheme.titleSmall,
                     alignLabelWithHint: true,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.primary,
@@ -396,29 +575,34 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                 padding: EdgeInsets.symmetric(vertical: 8.h),
                 child: TextFormField(
                   cursorColor: AppTheme.primary,
+                  minLines: 5,
+                  maxLines: 6,
                   style: Theme.of(context).textTheme.bodySmall,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    label: const Text('No. of Room/Units'),
+                    label: const Text('Describe your place'),
+                    isDense: true,
+                    hintText:
+                        'Why should a traveler choose to stay at your property?',
                     hintStyle: Theme.of(context).textTheme.labelSmall,
                     labelStyle: Theme.of(context).textTheme.titleSmall,
                     alignLabelWithHint: true,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.textHint,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 1.w,
                         color: AppTheme.primary,
@@ -426,6 +610,682 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                     ),
                   ),
                 ),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'When arriving, how can guests get to your property?',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  Text(
+                    'Help your guests easily find your place and decrease the likelihood of cancellations and issues on day of check-in. We will send these directions to your guests after booking confirmation along with your address and a link to a Google map. You can also create check-in instructions for your property and share your contact information through our chat, so please do not add those here.',
+                    style: GoogleFonts.oxygen(
+                      color: AppTheme.textHint.withOpacity(0.75),
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.h),
+                child: TextFormField(
+                  cursorColor: AppTheme.primary,
+                  minLines: 5,
+                  maxLines: 6,
+                  style: Theme.of(context).textTheme.bodySmall,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    hintText:
+                        'Example:Take Airport link to [destination] (airport to city) Transfer trains heading towards [stop] (urban transportation) Send me a message after transferring trains (personal instruction)',
+                    hintStyle: Theme.of(context).textTheme.labelSmall,
+                    labelStyle: Theme.of(context).textTheme.titleSmall,
+                    alignLabelWithHint: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      borderSide: BorderSide(
+                        width: 1.w,
+                        color: AppTheme.textHint,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      borderSide: BorderSide(
+                        width: 1.w,
+                        color: AppTheme.textHint,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      borderSide: BorderSide(
+                        width: 1.w,
+                        color: AppTheme.primary,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'What comes with your property?',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  Text(
+                    'All the little things (and big things) you provide',
+                    style: GoogleFonts.oxygen(
+                      color: AppTheme.textHint.withOpacity(0.75),
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Recommended',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    Text(
+                      'Travelers prefer these amenities when booking homes.',
+                      style: GoogleFonts.oxygen(
+                        color: AppTheme.textHint.withOpacity(0.75),
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              MultiSelectChipField(
+                decoration: BoxDecoration(
+                  border: Border.all(style: BorderStyle.none),
+                ),
+                showHeader: false,
+                scroll: false,
+                chipShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                  side: const BorderSide(
+                    color: AppTheme.primary,
+                    width: 1,
+                  ),
+                ),
+                items: <MultiSelectItem>[
+                  MultiSelectItem('Towels', 'Towels'),
+                  MultiSelectItem('Air conditioning', 'Air conditioning'),
+                  MultiSelectItem('TV', 'TV'),
+                  MultiSelectItem('Balcony or terrace', 'Balcony or terrace'),
+                  MultiSelectItem('Desk/workspace', 'Desk/workspace'),
+                  MultiSelectItem('Keyless access', 'Keyless access'),
+                  MultiSelectItem('Beachfront', 'Beachfront'),
+                  MultiSelectItem('Free parking', 'Free parking'),
+                  MultiSelectItem('Free WiFi', 'Free WiFi'),
+                  MultiSelectItem('Heating', 'Heating'),
+                  MultiSelectItem('Private entrance', 'Private entrance'),
+                  MultiSelectItem('Kitchen basics', 'Kitchen basics'),
+                ],
+                selectedChipColor: AppTheme.primary,
+                selectedTextStyle: GoogleFonts.oxygen(
+                  color: AppTheme.textLight.withOpacity(0.75),
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+                onTap: (values) {},
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Standard',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    Text(
+                      'These amenities are found in most of our successful properties.',
+                      style: GoogleFonts.oxygen(
+                        color: AppTheme.textHint.withOpacity(0.75),
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              MultiSelectChipField(
+                decoration: BoxDecoration(
+                  border: Border.all(style: BorderStyle.none),
+                ),
+                showHeader: false,
+                scroll: false,
+                chipShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                  side: const BorderSide(
+                    color: AppTheme.primary,
+                    width: 1,
+                  ),
+                ),
+                items: <MultiSelectItem>[
+                  MultiSelectItem('Closet', 'Closet'),
+                  MultiSelectItem('Dryer', 'Dryer'),
+                  MultiSelectItem('Fans', 'Fans'),
+                  MultiSelectItem('Linens', 'Linens'),
+                  MultiSelectItem('Laundromat nearby', 'Laundromat nearby'),
+                  MultiSelectItem('Washer', 'Washer'),
+                  MultiSelectItem('Iron', 'Iron'),
+                ],
+                selectedChipColor: AppTheme.primary,
+                selectedTextStyle: GoogleFonts.oxygen(
+                  color: AppTheme.textLight.withOpacity(0.75),
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+                onTap: (values) {},
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Kitchen',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    Text(
+                      'Guests often book homes because of the kitchen, make sure you let travelers know what to expect in your kitchen spaces.',
+                      style: GoogleFonts.oxygen(
+                        color: AppTheme.textHint.withOpacity(0.75),
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              MultiSelectChipField(
+                decoration: BoxDecoration(
+                  border: Border.all(style: BorderStyle.none),
+                ),
+                showHeader: false,
+                scroll: false,
+                chipShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                  side: const BorderSide(
+                    color: AppTheme.primary,
+                    width: 1,
+                  ),
+                ),
+                items: <MultiSelectItem>[
+                  MultiSelectItem('Coffee/Tea maker', 'Coffee/Tea maker'),
+                  MultiSelectItem('Dishwasher', 'Dishwasher'),
+                  MultiSelectItem('Freezer', 'Freezer'),
+                  MultiSelectItem('Microwave', 'Microwave'),
+                  MultiSelectItem('Stove', 'Stove'),
+                ],
+                selectedChipColor: AppTheme.primary,
+                selectedTextStyle: GoogleFonts.oxygen(
+                  color: AppTheme.textLight.withOpacity(0.75),
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+                onTap: (values) {},
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Bathroom',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    Text(
+                      'Let guests know what features your bathroom(s) have.',
+                      style: GoogleFonts.oxygen(
+                        color: AppTheme.textHint.withOpacity(0.75),
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              MultiSelectChipField(
+                decoration: BoxDecoration(
+                  border: Border.all(style: BorderStyle.none),
+                ),
+                showHeader: false,
+                scroll: false,
+                chipShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                  side: const BorderSide(
+                    color: AppTheme.primary,
+                    width: 1,
+                  ),
+                ),
+                items: <MultiSelectItem>[
+                  MultiSelectItem('Hair Dryer', 'Hair Dryer'),
+                  MultiSelectItem('Shampoo', 'Shampoo'),
+                  MultiSelectItem('Body Wash', 'Body Wash'),
+                  MultiSelectItem('Bathtub', 'Bathtub'),
+                  MultiSelectItem('Hand sanitizer', 'Hand sanitizer'),
+                ],
+                selectedChipColor: AppTheme.primary,
+                selectedTextStyle: GoogleFonts.oxygen(
+                  color: AppTheme.textLight.withOpacity(0.75),
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+                onTap: (values) {},
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Safety and Cleanliness',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    Text(
+                      'Show guests that you take their safety and health seriously with these amenities.',
+                      style: GoogleFonts.oxygen(
+                        color: AppTheme.textHint.withOpacity(0.75),
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              MultiSelectChipField(
+                decoration: BoxDecoration(
+                  border: Border.all(style: BorderStyle.none),
+                ),
+                showHeader: false,
+                scroll: false,
+                chipShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                  side: const BorderSide(
+                    color: AppTheme.primary,
+                    width: 1,
+                  ),
+                ),
+                items: <MultiSelectItem>[
+                  MultiSelectItem('Security [24-hour]', 'Security [24-hour]'),
+                  MultiSelectItem('First Aid Kit', 'First Aid Kit'),
+                  MultiSelectItem('Smoke detector', 'Smoke detector'),
+                  MultiSelectItem('Fire extinguisher', 'Fire extinguisher'),
+                  MultiSelectItem('Contactless check-in/check-out',
+                      'Contactless check-in/check-out'),
+                ],
+                selectedChipColor: AppTheme.primary,
+                selectedTextStyle: GoogleFonts.oxygen(
+                  color: AppTheme.textLight.withOpacity(0.75),
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+                onTap: (values) {},
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Other',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    Text(
+                      'Other offerings that may accommodate certain traveler needs.',
+                      style: GoogleFonts.oxygen(
+                        color: AppTheme.textHint.withOpacity(0.75),
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              MultiSelectChipField(
+                decoration: BoxDecoration(
+                  border: Border.all(style: BorderStyle.none),
+                ),
+                showHeader: false,
+                scroll: false,
+                chipShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                  side: const BorderSide(
+                    color: AppTheme.primary,
+                    width: 1,
+                  ),
+                ),
+                items: <MultiSelectItem>[
+                  MultiSelectItem('Gym', 'Gym'),
+                  MultiSelectItem('Hot tub', 'Hot tub'),
+                  MultiSelectItem('Indoor pool', 'Indoor pool'),
+                  MultiSelectItem('Pets allowed', 'Pets allowed'),
+                  MultiSelectItem('Smoking Area', 'Smoking Area'),
+                  MultiSelectItem('Indoor fireplace', 'Indoor fireplace'),
+                ],
+                selectedChipColor: AppTheme.primary,
+                selectedTextStyle: GoogleFonts.oxygen(
+                  color: AppTheme.textLight.withOpacity(0.75),
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+                onTap: (values) {},
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Set your prices.',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  Text(
+                    'Choose your nightly room rates based on guests and other conditions.',
+                    style: GoogleFonts.oxygen(
+                      color: AppTheme.textHint.withOpacity(0.75),
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.h),
+                child: TextFormField(
+                  cursorColor: AppTheme.primary,
+                  style: Theme.of(context).textTheme.bodySmall,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    label: const Text('Nightly Price'),
+                    hintText: '0.00',
+                    hintStyle: Theme.of(context).textTheme.labelSmall,
+                    labelStyle: Theme.of(context).textTheme.titleSmall,
+                    alignLabelWithHint: true,
+                    suffixIcon: DropdownMenu(
+                      width: 90.w,
+                      hintText: 'USD',
+                      textStyle: Theme.of(context).textTheme.bodySmall,
+                      inputDecorationTheme: InputDecorationTheme(
+                        isDense: true,
+                        isCollapsed: true,
+                        hintStyle: Theme.of(context).textTheme.titleSmall,
+                        border: InputBorder.none,
+                      ),
+                      menuStyle: MenuStyle(
+                        side: const MaterialStatePropertyAll(BorderSide.none),
+                        backgroundColor: MaterialStatePropertyAll(
+                          Theme.of(context).scaffoldBackgroundColor,
+                        ),
+                      ),
+                      dropdownMenuEntries: const [
+                        DropdownMenuEntry(value: 'value', label: 'value')
+                      ],
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      borderSide: BorderSide(
+                        width: 1.w,
+                        color: AppTheme.textHint,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      borderSide: BorderSide(
+                        width: 1.w,
+                        color: AppTheme.textHint,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      borderSide: BorderSide(
+                        width: 1.w,
+                        color: AppTheme.primary,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Weekly Rate',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    Text(
+                      'The following discount will apply to bookings which are for 7 or more nights.',
+                      style: GoogleFonts.oxygen(
+                        color: AppTheme.textHint.withOpacity(0.75),
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                      child: TextFormField(
+                        cursorColor: AppTheme.primary,
+                        keyboardType: TextInputType.name,
+                        style: Theme.of(context).textTheme.bodySmall,
+                        decoration: InputDecoration(
+                          label: const Text('%Off'),
+                          isDense: true,
+                          hintStyle: Theme.of(context).textTheme.labelSmall,
+                          labelStyle: Theme.of(context).textTheme.titleSmall,
+                          alignLabelWithHint: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.textHint,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.textHint,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.primary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 16.w),
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                      child: TextFormField(
+                        cursorColor: AppTheme.primary,
+                        keyboardType: TextInputType.number,
+                        style: Theme.of(context).textTheme.bodySmall,
+                        decoration: InputDecoration(
+                          label: const Text('Per Night'),
+                          isDense: true,
+                          hintStyle: Theme.of(context).textTheme.labelSmall,
+                          labelStyle: Theme.of(context).textTheme.titleSmall,
+                          alignLabelWithHint: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.textHint,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.textHint,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.primary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Monthly Rate',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    Text(
+                      'The following discount will apply to bookings which are for 28 or more nights.',
+                      style: GoogleFonts.oxygen(
+                        color: AppTheme.textHint.withOpacity(0.75),
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                      child: TextFormField(
+                        cursorColor: AppTheme.primary,
+                        keyboardType: TextInputType.name,
+                        style: Theme.of(context).textTheme.bodySmall,
+                        decoration: InputDecoration(
+                          label: const Text('%Off'),
+                          isDense: true,
+                          hintStyle: Theme.of(context).textTheme.labelSmall,
+                          labelStyle: Theme.of(context).textTheme.titleSmall,
+                          alignLabelWithHint: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.textHint,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.textHint,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.primary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 16.w),
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                      child: TextFormField(
+                        cursorColor: AppTheme.primary,
+                        keyboardType: TextInputType.number,
+                        style: Theme.of(context).textTheme.bodySmall,
+                        decoration: InputDecoration(
+                          label: const Text('Per Night'),
+                          isDense: true,
+                          hintStyle: Theme.of(context).textTheme.labelSmall,
+                          labelStyle: Theme.of(context).textTheme.titleSmall,
+                          alignLabelWithHint: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.textHint,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.textHint,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.primary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Show them what they’re missing.',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  Text(
+                    'Pictures matter to travelers. Upload as many high-quality images as you have. You can add more later. Want some tips on how to upload quality photos that generate more bookings?',
+                    style: GoogleFonts.oxygen(
+                      color: AppTheme.textHint.withOpacity(0.75),
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -54,7 +54,7 @@ class LargeCard extends StatelessWidget {
         child: Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(16.r),
+              borderRadius: BorderRadius.circular(8.r),
               child: CachedNetworkImage(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
@@ -65,7 +65,7 @@ class LargeCard extends StatelessWidget {
                   enabled: true,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       color: color,
                     ),
                   ),
@@ -76,7 +76,7 @@ class LargeCard extends StatelessWidget {
                   enabled: true,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       color: color,
                     ),
                   ),
@@ -233,7 +233,7 @@ class MediumCard extends StatelessWidget {
               enabled: true,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
+                  borderRadius: BorderRadius.circular(8.r),
                   color: color,
                 ),
               ),
@@ -244,7 +244,7 @@ class MediumCard extends StatelessWidget {
               enabled: true,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
+                  borderRadius: BorderRadius.circular(8.r),
                   color: color,
                 ),
               ),
@@ -400,7 +400,7 @@ class ReviewCard extends StatelessWidget {
                     enabled: true,
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.r),
+                        borderRadius: BorderRadius.circular(8.r),
                         color: color,
                       ),
                     ),
@@ -411,7 +411,7 @@ class ReviewCard extends StatelessWidget {
                     enabled: true,
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.r),
+                        borderRadius: BorderRadius.circular(8.r),
                         color: color,
                       ),
                     ),

@@ -20,7 +20,7 @@ class CategoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Ink(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(8.r),
         border: Border.all(
           width: 1.w,
           color: isSelected.value == true
