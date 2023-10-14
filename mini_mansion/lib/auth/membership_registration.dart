@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/functions.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/widgets/button.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../widgets/category_list.dart';
@@ -1330,7 +1331,24 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   ),
                 ],
               ),
-              const ImagesList(bodyData: {}),
+              const ImagesList(),
+              Center(
+                child: Button(
+                  width: 230.w,
+                  height: 50.h,
+                  borderRadius: 8.r,
+                  color: AppTheme.primary,
+                  onPressed: () {},
+                  widget: Text(
+                    'Submit Details',
+                    style: GoogleFonts.oxygen(
+                      color: AppTheme.textLight,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

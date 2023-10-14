@@ -1,28 +1,20 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../model/image_categories_model.dart';
 
-class AddSpecificImagePopup extends StatefulWidget {
-  final ImageCategory category;
+class AddSpecificImagePopup extends StatelessWidget {
+  final ImageCategoryModel category;
   const AddSpecificImagePopup({
     super.key,
     required this.category,
   });
-
-  @override
-  State<AddSpecificImagePopup> createState() => _AddSpecificImagePopupState();
-}
-
-class _AddSpecificImagePopupState extends State<AddSpecificImagePopup> {
-  File? image;
-  final picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -83,24 +75,22 @@ class _AddSpecificImagePopupState extends State<AddSpecificImagePopup> {
   }
 
   Future<void> getImageFromGallery(context) async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      Navigator.of(context).pop();
-      setState(() {
-        image = File(pickedFile.path);
-      });
+      Get.back();
+      category.thumnail.value = pickedFile.path;
     }
   }
 
   Future<void> getImageFromCamera(context) async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-      Navigator.of(context).pop();
-      setState(() {
-        image = File(pickedFile.path);
-      });
+      Get.back();
+      category.thumnail.value = pickedFile.path;
     }
   }
 }

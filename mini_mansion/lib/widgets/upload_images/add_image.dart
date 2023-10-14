@@ -12,24 +12,14 @@ import 'package:mini_mansion/widgets/upload_images/image_category.dart';
 
 import '../../model/image_categories_model.dart';
 
-class AddImage extends StatefulWidget {
+class AddImage extends StatelessWidget {
   final List<ImageCategoryModel> imageCategories;
   final BuildContext imageContext;
-  final Map<String, dynamic> bodyData;
   const AddImage({
     super.key,
     required this.imageContext,
-    required this.bodyData,
     required this.imageCategories,
   });
-
-  @override
-  State<AddImage> createState() => _AddImageState();
-}
-
-class _AddImageState extends State<AddImage> {
-  File? image;
-  final picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -90,47 +80,41 @@ class _AddImageState extends State<AddImage> {
   }
 
   Future<void> getImageFromGallery(context) async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      setState(() {
-        image = File(pickedFile.path);
-      });
       Get.back();
       showBlurredBarBottomSheet(
         backgroundColor:
-            Theme.of(widget.imageContext).bottomSheetTheme.backgroundColor,
+            Theme.of(imageContext).bottomSheetTheme.backgroundColor,
         builder: (BuildContext context) {
           return WhoseFace(
-            image: image!,
-            bodyData: widget.bodyData,
-            imageCategories: widget.imageCategories,
+            image: File(pickedFile.path),
+            imageCategories: imageCategories,
           );
         },
-        context: widget.imageContext,
+        context: imageContext,
       );
     }
   }
 
   Future<void> getImageFromCamera(context) async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-      setState(() {
-        image = File(pickedFile.path);
-      });
       Get.back();
       showBlurredBarBottomSheet(
         backgroundColor:
-            Theme.of(widget.imageContext).bottomSheetTheme.backgroundColor,
+            Theme.of(imageContext).bottomSheetTheme.backgroundColor,
         builder: (BuildContext context) {
           return WhoseFace(
-            image: image!,
-            bodyData: widget.bodyData,
-            imageCategories: widget.imageCategories,
+            image: File(pickedFile.path),
+            imageCategories: imageCategories,
           );
         },
-        context: widget.imageContext,
+        context: imageContext,
       );
     }
   }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/theme.dart';
 
@@ -10,12 +11,8 @@ import '../../model/image_categories_model.dart';
 class WhoseFace extends StatelessWidget {
   final List<ImageCategoryModel> imageCategories;
   final File image;
-  final Map<String, dynamic> bodyData;
   const WhoseFace(
-      {super.key,
-      required this.image,
-      required this.bodyData,
-      required this.imageCategories});
+      {super.key, required this.image, required this.imageCategories});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +57,10 @@ class WhoseFace extends StatelessWidget {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(8.r),
                   splashColor: AppTheme.primary.withOpacity(0.25),
-                  onTap: () {},
+                  onTap: () {
+                    Get.back();
+                    imageCategories[index].thumnail.value = image.path;
+                  },
                   child: Ink(
                     height: 40.h,
                     width: 80.w,
