@@ -3,10 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mini_mansion/constant/functions.dart';
 import 'package:mini_mansion/constant/theme.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../widgets/category_list.dart';
+import '../widgets/upload_images/images_list.dart';
 
 class MembershipRegistration extends StatefulWidget {
   const MembershipRegistration({super.key});
@@ -16,6 +18,8 @@ class MembershipRegistration extends StatefulWidget {
 }
 
 class _MembershipRegistrationState extends State<MembershipRegistration> {
+  List<DropdownMenuEntry> currencies = [];
+  List<DropdownMenuItem> countries = [];
   List<Map<String, dynamic>> propertyType = [
     {
       "title": "Lodging",
@@ -37,6 +41,35 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
   var accommodateValue = 1.obs;
   var bathroomValue = 1.obs;
   var bedroomValue = 1.obs;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Functions.loadCountries().then((value) {
+        for (var element in value) {
+          countries.add(
+            DropdownMenuItem(
+              value: element.toLowerCase(),
+              child: Text(element),
+            ),
+          );
+        }
+      });
+      await Functions.loadCurrencies().then((value) {
+        for (var element in value) {
+          currencies.add(
+            DropdownMenuEntry(
+              label: element,
+              value: element.toLowerCase(),
+            ),
+          );
+        }
+      });
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -324,12 +357,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                 padding: EdgeInsets.symmetric(vertical: 8.h),
                 child: DropdownButtonFormField(
                   padding: EdgeInsets.zero,
-                  items: const [
-                    DropdownMenuItem(
-                      value: 'pakistan',
-                      child: Text('Pakistan'),
-                    )
-                  ],
+                  items: countries,
                   isDense: true,
                   onChanged: (value) {},
                   style: Theme.of(context).textTheme.bodySmall,
@@ -711,6 +739,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   border: Border.all(style: BorderStyle.none),
                 ),
                 showHeader: false,
+                textStyle: Theme.of(context).textTheme.titleSmall,
                 scroll: false,
                 chipShape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),
@@ -735,7 +764,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                 ],
                 selectedChipColor: AppTheme.primary,
                 selectedTextStyle: GoogleFonts.oxygen(
-                  color: AppTheme.textLight.withOpacity(0.75),
+                  color: AppTheme.textLight,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
@@ -767,6 +796,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   border: Border.all(style: BorderStyle.none),
                 ),
                 showHeader: false,
+                textStyle: Theme.of(context).textTheme.titleSmall,
                 scroll: false,
                 chipShape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),
@@ -786,7 +816,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                 ],
                 selectedChipColor: AppTheme.primary,
                 selectedTextStyle: GoogleFonts.oxygen(
-                  color: AppTheme.textLight.withOpacity(0.75),
+                  color: AppTheme.textLight,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
@@ -818,6 +848,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   border: Border.all(style: BorderStyle.none),
                 ),
                 showHeader: false,
+                textStyle: Theme.of(context).textTheme.titleSmall,
                 scroll: false,
                 chipShape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),
@@ -835,7 +866,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                 ],
                 selectedChipColor: AppTheme.primary,
                 selectedTextStyle: GoogleFonts.oxygen(
-                  color: AppTheme.textLight.withOpacity(0.75),
+                  color: AppTheme.textLight,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
@@ -867,6 +898,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   border: Border.all(style: BorderStyle.none),
                 ),
                 showHeader: false,
+                textStyle: Theme.of(context).textTheme.titleSmall,
                 scroll: false,
                 chipShape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),
@@ -884,7 +916,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                 ],
                 selectedChipColor: AppTheme.primary,
                 selectedTextStyle: GoogleFonts.oxygen(
-                  color: AppTheme.textLight.withOpacity(0.75),
+                  color: AppTheme.textLight,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
@@ -916,6 +948,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   border: Border.all(style: BorderStyle.none),
                 ),
                 showHeader: false,
+                textStyle: Theme.of(context).textTheme.titleSmall,
                 scroll: false,
                 chipShape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),
@@ -934,7 +967,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                 ],
                 selectedChipColor: AppTheme.primary,
                 selectedTextStyle: GoogleFonts.oxygen(
-                  color: AppTheme.textLight.withOpacity(0.75),
+                  color: AppTheme.textLight,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
@@ -965,6 +998,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                 decoration: BoxDecoration(
                   border: Border.all(style: BorderStyle.none),
                 ),
+                textStyle: Theme.of(context).textTheme.titleSmall,
                 showHeader: false,
                 scroll: false,
                 chipShape: RoundedRectangleBorder(
@@ -984,7 +1018,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                 ],
                 selectedChipColor: AppTheme.primary,
                 selectedTextStyle: GoogleFonts.oxygen(
-                  color: AppTheme.textLight.withOpacity(0.75),
+                  color: AppTheme.textLight,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
@@ -1010,59 +1044,68 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.h),
-                child: TextFormField(
-                  cursorColor: AppTheme.primary,
-                  style: Theme.of(context).textTheme.bodySmall,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    label: const Text('Nightly Price'),
-                    hintText: '0.00',
-                    hintStyle: Theme.of(context).textTheme.labelSmall,
-                    labelStyle: Theme.of(context).textTheme.titleSmall,
-                    alignLabelWithHint: true,
-                    suffixIcon: DropdownMenu(
-                      width: 90.w,
-                      hintText: 'USD',
-                      textStyle: Theme.of(context).textTheme.bodySmall,
-                      inputDecorationTheme: InputDecorationTheme(
-                        isDense: true,
-                        isCollapsed: true,
-                        hintStyle: Theme.of(context).textTheme.titleSmall,
-                        border: InputBorder.none,
-                      ),
-                      menuStyle: MenuStyle(
-                        side: const MaterialStatePropertyAll(BorderSide.none),
-                        backgroundColor: MaterialStatePropertyAll(
-                          Theme.of(context).scaffoldBackgroundColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      flex: 2,
+                      child: TextFormField(
+                        cursorColor: AppTheme.primary,
+                        style: Theme.of(context).textTheme.bodySmall,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          label: const Text('Nightly Price'),
+                          hintText: '0.00',
+                          hintStyle: Theme.of(context).textTheme.labelSmall,
+                          labelStyle: Theme.of(context).textTheme.titleSmall,
+                          alignLabelWithHint: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.textHint,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.textHint,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(
+                              width: 1.w,
+                              color: AppTheme.primary,
+                            ),
+                          ),
                         ),
                       ),
-                      dropdownMenuEntries: const [
-                        DropdownMenuEntry(value: 'value', label: 'value')
-                      ],
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.r),
-                      borderSide: BorderSide(
-                        width: 1.w,
-                        color: AppTheme.textHint,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.r),
-                      borderSide: BorderSide(
-                        width: 1.w,
-                        color: AppTheme.textHint,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.r),
-                      borderSide: BorderSide(
-                        width: 1.w,
-                        color: AppTheme.primary,
-                      ),
-                    ),
-                  ),
+                    // Flexible(
+                    //   flex: 1,
+                    //   child: DropdownMenu(
+                    //     width: 90.w,
+                    //     hintText: 'USD',
+                    //     textStyle: Theme.of(context).textTheme.bodySmall,
+                    //     inputDecorationTheme: InputDecorationTheme(
+                    //       isDense: true,
+                    //       isCollapsed: true,
+                    //       hintStyle: Theme.of(context).textTheme.titleSmall,
+                    //       border: InputBorder.none,
+                    //     ),
+                    //     menuStyle: MenuStyle(
+                    //       side: const MaterialStatePropertyAll(BorderSide.none),
+                    //       backgroundColor: MaterialStatePropertyAll(
+                    //         Theme.of(context).scaffoldBackgroundColor,
+                    //       ),
+                    //     ),
+                    //     dropdownMenuEntries: currencies,
+                    //   ),
+                    // ),
+                  ],
                 ),
               ),
               Padding(
@@ -1287,6 +1330,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   ),
                 ],
               ),
+              const ImagesList(bodyData: {}),
             ],
           ),
         ),
