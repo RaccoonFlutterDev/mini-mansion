@@ -3,11 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mini_mansion/auth/membership_registration.dart';
 import 'package:mini_mansion/constant/theme.dart';
-import 'package:mini_mansion/home/landing_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constant/variables.dart';
+import 'home/dashboard.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -158,7 +157,7 @@ class MyApp extends StatelessWidget {
               surface: AppTheme.textDark,
             ),
           ),
-          home: const MembershipRegistration(),
+          home: const MyDashboard(),
         );
       },
     );
