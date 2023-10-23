@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mini_mansion/constant/functions.dart';
 import 'package:mini_mansion/constant/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constant/variables.dart';
@@ -12,6 +13,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   prefs = await SharedPreferences.getInstance();
+  await Functions.checkPermissions();
   runApp(const MyApp());
 }
 
@@ -20,6 +22,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: AppTheme.transparent,
+      statusBarIconBrightness: Brightness.light,
+    ));
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -38,67 +44,7 @@ class MyApp extends StatelessWidget {
             );
           },
           debugShowCheckedModeBanner: false,
-          themeMode: ThemeMode.system,
-          darkTheme: ThemeData(
-            scaffoldBackgroundColor: AppTheme.backgroundDark,
-            fontFamily: GoogleFonts.oxygen().debugLabel,
-            hintColor: AppTheme.textHint,
-            primaryColor: AppTheme.primary,
-            primarySwatch: AppTheme.primarySwatch,
-            textTheme: TextTheme(
-              headlineLarge: GoogleFonts.oxygen(
-                color: AppTheme.textLight,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
-              headlineMedium: GoogleFonts.oxygen(
-                color: AppTheme.textLight,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-              ),
-              headlineSmall: GoogleFonts.oxygen(
-                color: AppTheme.textLight,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
-              ),
-              bodyLarge: GoogleFonts.oxygen(
-                color: AppTheme.textLight,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-              ),
-              bodyMedium: GoogleFonts.oxygen(
-                color: AppTheme.textLight,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-              ),
-              bodySmall: GoogleFonts.oxygen(
-                color: AppTheme.textLight,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w500,
-              ),
-              labelLarge: GoogleFonts.oxygen(
-                color: AppTheme.textHint,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
-              labelMedium: GoogleFonts.oxygen(
-                color: AppTheme.textHint,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-              ),
-              labelSmall: GoogleFonts.oxygen(
-                color: AppTheme.textHint,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: AppTheme.primary,
-              tertiary: AppTheme.textLight,
-              surface: AppTheme.textLight,
-            ),
-            useMaterial3: true,
-          ),
+          themeMode: ThemeMode.light,
           theme: ThemeData(
             scaffoldBackgroundColor: AppTheme.backgroundLight,
             hintColor: AppTheme.textHint,

@@ -83,7 +83,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
             Icons.close_rounded,
             color: Theme.of(context).colorScheme.surface,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

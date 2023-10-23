@@ -2,8 +2,8 @@ import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:mini_mansion/constant/functions.dart';
 import 'package:mini_mansion/home/favorites.dart';
+import 'package:mini_mansion/home/profile.dart';
 
 import 'home.dart';
 
@@ -14,7 +14,7 @@ class MyDashboard extends StatefulWidget {
   State<MyDashboard> createState() => _MyDashboardState();
 }
 
-class _MyDashboardState extends State<MyDashboard> with WidgetsBindingObserver {
+class _MyDashboardState extends State<MyDashboard> {
   var pages = [].obs;
 
   var currentIndex = 1.obs;
@@ -23,27 +23,9 @@ class _MyDashboardState extends State<MyDashboard> with WidgetsBindingObserver {
     pages = [
       const FavoritesScreen(),
       const MyHomePage(),
-      Container(
-        width: Get.width,
-        height: Get.height,
-        color: Colors.blue,
-      ),
+      const MyProfile(),
     ].obs;
-    WidgetsBinding.instance.addObserver(this);
-    Functions.updateStatusBarColor();
     super.initState();
-  }
-
-  @override
-  void didChangePlatformBrightness() {
-    super.didChangePlatformBrightness();
-    Functions.updateStatusBarColor();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
   }
 
   @override
