@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mini_mansion/constant/theme.dart';
 import 'package:mini_mansion/widgets/button.dart';
 import 'package:mini_mansion/widgets/cards.dart';
@@ -13,11 +14,22 @@ import 'package:rating_summary/rating_summary.dart';
 import 'package:readmore/readmore.dart';
 import 'package:shimmer/shimmer.dart';
 
-class HotelDetails extends StatelessWidget {
+class HotelDetails extends StatefulWidget {
   final String imageUrl;
-  HotelDetails({super.key, required this.imageUrl});
+  const HotelDetails({super.key, required this.imageUrl});
+
+  @override
+  State<HotelDetails> createState() => _HotelDetailsState();
+}
+
+class _HotelDetailsState extends State<HotelDetails> {
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(33.4875103, 73.1008179),
+    zoom: 16,
+  );
 
   var isFavorite = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return DraggableHome(
@@ -183,6 +195,39 @@ class HotelDetails extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(
+          height: 116.w,
+          child: ListView.builder(
+            shrinkWrap: true,
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              return Container(
+                height: 100.w,
+                width: 100.w,
+                margin: EdgeInsets.all(8.r),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.r),
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  image: DecorationImage(
+                    image: NetworkImage(widget.imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 0),
+                      blurRadius: 5,
+                      spreadRadius: 0.25,
+                      color: Theme.of(context).shadowColor.withOpacity(0.25),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
@@ -226,11 +271,10 @@ class HotelDetails extends StatelessWidget {
         ),
         ListView.builder(
           shrinkWrap: true,
-          padding:
-              EdgeInsets.only(top: 8.w, bottom: 79.h, left: 8.w, right: 8.w),
+          padding: EdgeInsets.all(8.r),
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.vertical,
-          itemCount: 2,
+          itemCount: 3,
           itemBuilder: (context, index) {
             return ReviewCard(
               onPressed: () {},
@@ -239,6 +283,53 @@ class HotelDetails extends StatelessWidget {
                   'https://thumbs.dreamstime.com/b/close-up-photo-confident-serious-intelligent-clever-smart-man-staring-you-intently-new-eyewear-isolated-over-color-grey-161081282.jpg',
             );
           },
+        ),
+        Container(
+          height: 200.h,
+          margin: EdgeInsets.symmetric(horizontal: 16.w),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, 0),
+                blurRadius: 5,
+                spreadRadius: 0.25,
+                color: Theme.of(context).shadowColor.withOpacity(0.25),
+              )
+            ],
+          ),
+          child: GoogleMap(
+            mapType: MapType.terrain,
+            markers: <Marker>{
+              const Marker(
+                markerId: MarkerId('home'),
+                position: LatLng(33.4875103, 73.1008179),
+              )
+            },
+            myLocationEnabled: true,
+            myLocationButtonEnabled: true,
+            initialCameraPosition: _kGooglePlex,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(16.r),
+          child: Align(
+            alignment: Alignment.center,
+            child: Button(
+              width: 250.w,
+              height: 50.h,
+              borderRadius: 8.r,
+              color: AppTheme.primary,
+              onPressed: () {},
+              widget: Text(
+                'Book Now',
+                style: GoogleFonts.oxygen(
+                  color: AppTheme.textLight,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
         ),
       ],
       fullyStretchable: false,
@@ -251,7 +342,7 @@ class HotelDetails extends StatelessWidget {
     return Stack(
       children: [
         CachedNetworkImage(
-          imageUrl: imageUrl,
+          imageUrl: widget.imageUrl,
           height: Get.height,
           placeholder: (context, url) => Shimmer.fromColors(
             baseColor: Theme.of(context).cardColor,

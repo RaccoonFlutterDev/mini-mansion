@@ -31,6 +31,7 @@ class _MyDashboardState extends State<MyDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Obx(
         () {

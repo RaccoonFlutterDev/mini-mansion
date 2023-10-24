@@ -25,203 +25,237 @@ class MyProfile extends StatelessWidget {
       ),
       body: SizedBox.expand(
         child: Padding(
-          padding: EdgeInsets.all(16.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Button(
-                width: Get.width * 0.75.w,
-                widget: Text(
-                  'Sign in or Create an account',
-                  style: GoogleFonts.oxygen(
-                    color: AppTheme.textLight,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(8.r),
+                  child: CircleAvatar(
+                    radius: 50.r,
+                    backgroundImage: const NetworkImage(
+                      'https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg',
+                    ),
                   ),
                 ),
-                onPressed: () {
-                  Get.to(
-                    LoginScreen(),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(
-                      milliseconds: 500,
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Text(
+                          'Hello! ',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Text(
+                          'Inamullah Shah',
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                Button(
+                  width: Get.width * 0.75.w,
+                  widget: Text(
+                    'Sign in or Create an account',
+                    style: GoogleFonts.oxygen(
+                      color: AppTheme.textLight,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
                     ),
-                  );
-                },
-                color: AppTheme.primary,
-              ),
-              SizedBox(height: 16.h),
-              ListTile(
-                onTap: () {},
-                contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                leading: Icon(
-                  Icons.business_center_outlined,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 20.sp,
+                  ),
+                  onPressed: () {
+                    Get.to(
+                      LoginScreen(),
+                      transition: Transition.rightToLeft,
+                      duration: const Duration(
+                        milliseconds: 500,
+                      ),
+                    );
+                  },
+                  color: AppTheme.primary,
                 ),
-                title: Text(
-                  'My Bookings',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                SizedBox(height: 16.h),
+                ListTile(
+                  onTap: () {},
+                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
+                  leading: Icon(
+                    Icons.business_center_outlined,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 20.sp,
+                  ),
+                  title: Text(
+                    'My Bookings',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 16.sp,
+                  ),
                 ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 16.sp,
+                ListTile(
+                  onTap: () {},
+                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
+                  leading: Icon(
+                    Icons.payments_outlined,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 20.sp,
+                  ),
+                  title: Text(
+                    'Payment Settings',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 16.sp,
+                  ),
                 ),
-              ),
-              ListTile(
-                onTap: () {},
-                contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                leading: Icon(
-                  Icons.payments_outlined,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 20.sp,
+                ListTile(
+                  onTap: () {
+                    Get.to(
+                      const MembershipRegistration(),
+                      transition: Transition.downToUp,
+                      duration: const Duration(
+                        milliseconds: 500,
+                      ),
+                    );
+                  },
+                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
+                  leading: Icon(
+                    Icons.temple_buddhist_outlined,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 20.sp,
+                  ),
+                  title: Text(
+                    'List your Property',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 16.sp,
+                  ),
                 ),
-                title: Text(
-                  'Payment Settings',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                ListTile(
+                  onTap: () {},
+                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
+                  leading: Icon(
+                    Icons.favorite_border_rounded,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 20.sp,
+                  ),
+                  title: Text(
+                    'Wish List',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 16.sp,
+                  ),
                 ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 16.sp,
+                ListTile(
+                  onTap: () {},
+                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
+                  leading: Icon(
+                    Icons.location_on_outlined,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 20.sp,
+                  ),
+                  title: Text(
+                    'Location',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 16.sp,
+                  ),
                 ),
-              ),
-              ListTile(
-                onTap: () {},
-                contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                leading: Icon(
-                  Icons.favorite_border_rounded,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 20.sp,
+                ListTile(
+                  onTap: () {},
+                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
+                  leading: Icon(
+                    Icons.settings_outlined,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 20.sp,
+                  ),
+                  title: Text(
+                    'Settings',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 16.sp,
+                  ),
                 ),
-                title: Text(
-                  'Wish List',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                ListTile(
+                  onTap: () {},
+                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
+                  leading: Icon(
+                    Icons.help_outline_outlined,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 20.sp,
+                  ),
+                  title: Text(
+                    'Help Center',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 16.sp,
+                  ),
                 ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 16.sp,
+                ListTile(
+                  onTap: () {},
+                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
+                  leading: Icon(
+                    Icons.star_border_rounded,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 20.sp,
+                  ),
+                  title: Text(
+                    'Rate our app',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 16.sp,
+                  ),
                 ),
-              ),
-              ListTile(
-                onTap: () {},
-                contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                leading: Icon(
-                  Icons.location_on_outlined,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 20.sp,
+                ListTile(
+                  onTap: () {},
+                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
+                  leading: Icon(
+                    Icons.admin_panel_settings_outlined,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 20.sp,
+                  ),
+                  title: Text(
+                    'Privacy Policy',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).colorScheme.surface,
+                    size: 16.sp,
+                  ),
                 ),
-                title: Text(
-                  'Location',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 16.sp,
-                ),
-              ),
-              ListTile(
-                onTap: () {},
-                contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                leading: Icon(
-                  Icons.settings_outlined,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 20.sp,
-                ),
-                title: Text(
-                  'Settings',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 16.sp,
-                ),
-              ),
-              ListTile(
-                onTap: () {},
-                contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                leading: Icon(
-                  Icons.help_outline_outlined,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 20.sp,
-                ),
-                title: Text(
-                  'Help Center',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 16.sp,
-                ),
-              ),
-              ListTile(
-                onTap: () {},
-                contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                leading: Icon(
-                  Icons.star_border_rounded,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 20.sp,
-                ),
-                title: Text(
-                  'Rate our app',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 16.sp,
-                ),
-              ),
-              ListTile(
-                onTap: () {},
-                contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                leading: Icon(
-                  Icons.admin_panel_settings_outlined,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 20.sp,
-                ),
-                title: Text(
-                  'Privacy Policy',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 16.sp,
-                ),
-              ),
-              ListTile(
-                onTap: () {
-                  Get.to(
-                    const MembershipRegistration(),
-                    transition: Transition.downToUp,
-                    duration: const Duration(
-                      milliseconds: 500,
-                    ),
-                  );
-                },
-                contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                leading: Icon(
-                  Icons.temple_buddhist_outlined,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 20.sp,
-                ),
-                title: Text(
-                  'List your property',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.surface,
-                  size: 16.sp,
-                ),
-              ),
-            ],
+              SizedBox(height: 79.h),
+              ],
+            ),
           ),
         ),
       ),
