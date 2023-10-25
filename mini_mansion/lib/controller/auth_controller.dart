@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:mini_mansion/constant/variables.dart';
-import 'package:mini_mansion/controller/firebase/firebase_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+
+import 'firebase/firestore_crud.dart';
 
 class SocialAuth {
   static Future<UserCredential> signInWithGoogle(context) async {
@@ -25,7 +26,11 @@ class SocialAuth {
     return await FirebaseAuth.instance
         .signInWithCredential(credential)
         .whenComplete(() async {
-      await FirebaseActions.addMail().then((value) {
+      await FirebaseCRUD(collectionPath: 'users').create(body: {
+        "name": auth.currentUser!.displayName,
+        "email": auth.currentUser!.email,
+        "phone_no": auth.currentUser!.phoneNumber,
+      }).then((value) {
         isLoggedIn.value = true;
 
         Get.back();
@@ -80,7 +85,11 @@ class SocialAuth {
     return FirebaseAuth.instance
         .signInWithCredential(facebookAuthCredential)
         .whenComplete(() async {
-      await FirebaseActions.addMail().then((value) {
+      await FirebaseCRUD(collectionPath: 'users').create(body: {
+        "name": auth.currentUser!.displayName,
+        "email": auth.currentUser!.email,
+        "phone_no": auth.currentUser!.phoneNumber,
+      }).then((value) {
         isLoggedIn.value = true;
 
         Get.back();
@@ -163,7 +172,11 @@ class SocialAuth {
     return await FirebaseAuth.instance
         .signInWithCredential(oauthCredential)
         .whenComplete(() async {
-      await FirebaseActions.addMail().then((value) {
+      await FirebaseCRUD(collectionPath: 'users').create(body: {
+        "name": auth.currentUser!.displayName,
+        "email": auth.currentUser!.email,
+        "phone_no": auth.currentUser!.phoneNumber,
+      }).then((value) {
         isLoggedIn.value = true;
 
         Get.back();
