@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,9 +9,15 @@ import 'package:mini_mansion/constant/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constant/variables.dart';
 import 'home/dashboard.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  app = await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  auth = FirebaseAuth.instanceFor(app: app);
   await ScreenUtil.ensureScreenSize();
   prefs = await SharedPreferences.getInstance();
   await Functions.checkPermissions();

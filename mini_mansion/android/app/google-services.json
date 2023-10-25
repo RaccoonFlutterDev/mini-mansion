@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1066542021688",
+    "project_id": "mini-mansion-8bc39",
+    "storage_bucket": "mini-mansion-8bc39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066542021688:android:1f068c549cb2603138bacd",
+        "android_client_info": {
+          "package_name": "com.example.mini_mansion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9SNr3b9KV5Tr4zMC_qTLnfXf2WtSi508"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
