@@ -16,43 +16,43 @@ class ImagesList extends StatelessWidget {
   Widget build(BuildContext context) {
     var imageCategories = [
       ImageCategoryModel(
-        category: ImageCategory.Front,
+        category: ImageCategory.front,
         thumnail: ''.obs,
       ),
       ImageCategoryModel(
-        category: ImageCategory.Back,
+        category: ImageCategory.back,
         thumnail: ''.obs,
       ),
       ImageCategoryModel(
-        category: ImageCategory.BedRoom,
+        category: ImageCategory.bedRoom,
         thumnail: ''.obs,
       ),
       ImageCategoryModel(
-        category: ImageCategory.BedRoom,
+        category: ImageCategory.bedRoom,
         thumnail: ''.obs,
       ),
       ImageCategoryModel(
-        category: ImageCategory.BedRoom,
+        category: ImageCategory.bedRoom,
         thumnail: ''.obs,
       ),
       ImageCategoryModel(
-        category: ImageCategory.Bathroom,
+        category: ImageCategory.bathroom,
         thumnail: ''.obs,
       ),
       ImageCategoryModel(
-        category: ImageCategory.Kitchen,
+        category: ImageCategory.kitchen,
         thumnail: ''.obs,
       ),
       ImageCategoryModel(
-        category: ImageCategory.Parking,
+        category: ImageCategory.parking,
         thumnail: ''.obs,
       ),
       ImageCategoryModel(
-        category: ImageCategory.Terrace,
+        category: ImageCategory.terrace,
         thumnail: ''.obs,
       ),
       ImageCategoryModel(
-        category: ImageCategory.Others,
+        category: ImageCategory.others,
         thumnail: ''.obs,
       ),
     ].obs;

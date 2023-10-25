@@ -1,11 +1,14 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/controller/auth_controller.dart';
 import 'package:mini_mansion/widgets/button.dart';
 import 'package:mini_mansion/widgets/social_button.dart';
 
@@ -255,7 +258,9 @@ class LoginScreen extends StatelessWidget {
                           color: AppTheme.textLight,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await SocialAuth.signInWithFacebook();
+                      },
                       color: const Color(0xFF487ae1),
                     ),
                     SocialLoginButton(
@@ -272,27 +277,32 @@ class LoginScreen extends StatelessWidget {
                           color: AppTheme.textDark,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await SocialAuth.signInWithGoogle();
+                      },
                       color: const Color(0xFFFFFFFF),
                     ),
-                    SocialLoginButton(
-                      icon: Icon(
-                        Icons.apple_outlined,
-                        color: AppTheme.textLight,
-                        size: 24.sp,
-                      ),
-                      title: Text(
-                        'Continue With Apple',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.sp,
-                          fontFamily: 'Poppins',
+                    if (Platform.isIOS)
+                      SocialLoginButton(
+                        icon: Icon(
+                          Icons.apple_outlined,
                           color: AppTheme.textLight,
+                          size: 24.sp,
                         ),
+                        title: Text(
+                          'Continue With Apple',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.sp,
+                            fontFamily: 'Poppins',
+                            color: AppTheme.textLight,
+                          ),
+                        ),
+                        onPressed: () async {
+                          await SocialAuth.signInWithApple();
+                        },
+                        color: const Color(0xFF000000),
                       ),
-                      onPressed: () {},
-                      color: const Color(0xFF000000),
-                    ),
                   ],
                 ),
               ),

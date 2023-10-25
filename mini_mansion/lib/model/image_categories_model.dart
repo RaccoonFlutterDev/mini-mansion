@@ -4,14 +4,14 @@
 import 'package:get/get.dart';
 
 enum ImageCategory {
-  Front,
-  Back,
-  BedRoom,
-  Bathroom,
-  Kitchen,
-  Parking,
-  Terrace,
-  Others
+  front,
+  back,
+  bedRoom,
+  bathroom,
+  kitchen,
+  parking,
+  terrace,
+  others
 }
 
 class ImageCategoryModel {

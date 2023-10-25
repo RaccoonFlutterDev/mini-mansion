@@ -82,7 +82,11 @@ class WhoseFace extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        imageCategories[index].category.name.toString(),
+                        imageCategories[index]
+                            .category
+                            .name
+                            .camelCase
+                            .toString(),
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),

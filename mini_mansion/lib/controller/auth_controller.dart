@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mini_mansion/constant/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -8,12 +9,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mini_mansion/model/auth_location_model.dart';
+import 'package:mini_mansion/model/auth_model.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import 'firebase/firestore_crud.dart';
 
 class SocialAuth {
-  static Future<UserCredential> signInWithGoogle(context) async {
+  static Future<UserCredential> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     final GoogleSignInAuthentication? googleAuth =
@@ -26,11 +29,13 @@ class SocialAuth {
     return await FirebaseAuth.instance
         .signInWithCredential(credential)
         .whenComplete(() async {
-      await FirebaseCRUD(collectionPath: 'users').create(body: {
-        "name": auth.currentUser!.displayName,
-        "email": auth.currentUser!.email,
-        "phone_no": auth.currentUser!.phoneNumber,
-      }).then((value) {
+      AuthModel authModel = AuthModel(
+          name: auth.currentUser!.displayName!,
+          email: auth.currentUser!.email!,
+          phoneNo: auth.currentUser!.phoneNumber);
+      await FirebaseCRUD(collectionPath: 'users')
+          .create(body: authModel.toJson())
+          .then((value) {
         isLoggedIn.value = true;
 
         Get.back();
@@ -38,28 +43,28 @@ class SocialAuth {
           GetSnackBar(
             titleText: Text(
               'Success!',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Get.context!.textTheme.titleMedium,
             ),
             messageText: Text(
-              'Successfully Login',
-              style: Theme.of(context).textTheme.bodyMedium,
+              'Successfully Created',
+              style: Get.context!.textTheme.bodyMedium,
             ),
             mainButton: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Text(
-                '🎉',
-                style: Theme.of(context).textTheme.bodyMedium,
+              child: SvgPicture.asset(
+                'assets/icons/congratulation.svg',
+                width: 24.w,
+                height: 24.h,
               ),
             ),
             shouldIconPulse: true,
             snackStyle: SnackStyle.GROUNDED,
-            backgroundColor: Theme.of(context).colorScheme.tertiary,
             boxShadows: [
               BoxShadow(
                 offset: const Offset(0, 0),
                 blurRadius: 4,
                 spreadRadius: 0.5,
-                color: Theme.of(context).shadowColor,
+                color: Colors.grey.shade100,
               )
             ],
             duration: const Duration(seconds: 2),
@@ -73,7 +78,7 @@ class SocialAuth {
     await FirebaseAuth.instance.signOut();
   }
 
-  static Future<UserCredential> signInWithFacebook(context) async {
+  static Future<UserCredential> signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
@@ -85,11 +90,24 @@ class SocialAuth {
     return FirebaseAuth.instance
         .signInWithCredential(facebookAuthCredential)
         .whenComplete(() async {
-      await FirebaseCRUD(collectionPath: 'users').create(body: {
-        "name": auth.currentUser!.displayName,
-        "email": auth.currentUser!.email,
-        "phone_no": auth.currentUser!.phoneNumber,
-      }).then((value) {
+      User user = auth.currentUser!;
+      AuthModel authModel = AuthModel(
+          name: user.displayName!,
+          email: user.email!,
+          phoneNo: user.phoneNumber);
+      AuthLocationModel? authLocationModel;
+      await location.getLocation().then((value) async {
+        authLocationModel = AuthLocationModel(
+            uid: user.uid,
+            address: '',
+            lat: value.latitude!,
+            lang: value.longitude!);
+      });
+      await FirebaseCRUD(collectionPath: 'users')
+          .create(body: authModel.toJson())
+          .then((value) async {
+        await FirebaseCRUD(collectionPath: 'users_location')
+            .create(body: authLocationModel!.toJson());
         isLoggedIn.value = true;
 
         Get.back();
@@ -97,28 +115,28 @@ class SocialAuth {
           GetSnackBar(
             titleText: Text(
               'Success!',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Get.context!.textTheme.titleMedium,
             ),
             messageText: Text(
-              'Successfully Login',
-              style: Theme.of(context).textTheme.bodyMedium,
+              'Successfully Created',
+              style: Get.context!.textTheme.bodyMedium,
             ),
             mainButton: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Text(
-                '🎉',
-                style: Theme.of(context).textTheme.bodyMedium,
+              child: SvgPicture.asset(
+                'assets/icons/congratulation.svg',
+                width: 24.w,
+                height: 24.h,
               ),
             ),
             shouldIconPulse: true,
             snackStyle: SnackStyle.GROUNDED,
-            backgroundColor: Theme.of(context).colorScheme.tertiary,
             boxShadows: [
               BoxShadow(
                 offset: const Offset(0, 0),
                 blurRadius: 4,
                 spreadRadius: 0.5,
-                color: Theme.of(context).shadowColor,
+                color: Colors.grey.shade100,
               )
             ],
             duration: const Duration(seconds: 2),
@@ -144,7 +162,7 @@ class SocialAuth {
     return digest.toString();
   }
 
-  static Future<UserCredential> signInWithApple(context) async {
+  static Future<UserCredential> signInWithApple() async {
     // To prevent replay attacks with the credential returned from Apple, we
     // include a nonce in the credential request. When signing in with
     // Firebase, the nonce in the id token returned by Apple, is expected to
@@ -172,11 +190,13 @@ class SocialAuth {
     return await FirebaseAuth.instance
         .signInWithCredential(oauthCredential)
         .whenComplete(() async {
-      await FirebaseCRUD(collectionPath: 'users').create(body: {
-        "name": auth.currentUser!.displayName,
-        "email": auth.currentUser!.email,
-        "phone_no": auth.currentUser!.phoneNumber,
-      }).then((value) {
+      AuthModel authModel = AuthModel(
+          name: auth.currentUser!.displayName!,
+          email: auth.currentUser!.email!,
+          phoneNo: auth.currentUser!.phoneNumber);
+      await FirebaseCRUD(collectionPath: 'users')
+          .create(body: authModel.toJson())
+          .then((value) {
         isLoggedIn.value = true;
 
         Get.back();
@@ -184,28 +204,28 @@ class SocialAuth {
           GetSnackBar(
             titleText: Text(
               'Success!',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Get.context!.textTheme.titleMedium,
             ),
             messageText: Text(
-              'Successfully Login',
-              style: Theme.of(context).textTheme.bodyMedium,
+              'Successfully Created',
+              style: Get.context!.textTheme.bodyMedium,
             ),
             mainButton: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Text(
-                '🎉',
-                style: Theme.of(context).textTheme.bodyMedium,
+              child: SvgPicture.asset(
+                'assets/icons/congratulation.svg',
+                width: 24.w,
+                height: 24.h,
               ),
             ),
             shouldIconPulse: true,
             snackStyle: SnackStyle.GROUNDED,
-            backgroundColor: Theme.of(context).colorScheme.tertiary,
             boxShadows: [
               BoxShadow(
                 offset: const Offset(0, 0),
                 blurRadius: 4,
                 spreadRadius: 0.5,
-                color: Theme.of(context).shadowColor,
+                color: Colors.grey.shade100,
               )
             ],
             duration: const Duration(seconds: 2),
