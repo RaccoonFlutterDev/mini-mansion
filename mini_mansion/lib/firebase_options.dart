@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyD9SNr3b9KV5Tr4zMC_qTLnfXf2WtSi508',
-    appId: '1:1066542021688:android:1f068c549cb2603138bacd',
+    appId: '1:1066542021688:android:2477aa288fcf868938bacd',
     messagingSenderId: '1066542021688',
     projectId: 'mini-mansion-8bc39',
     storageBucket: 'mini-mansion-8bc39.appspot.com',
@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAW0SmuIPQH2CqcsWGMUD2shQFbhY_-F0A',
-    appId: '1:1066542021688:ios:47b0ea8ae6c8752038bacd',
+    appId: '1:1066542021688:ios:0957130697c313f138bacd',
     messagingSenderId: '1066542021688',
     projectId: 'mini-mansion-8bc39',
     storageBucket: 'mini-mansion-8bc39.appspot.com',
-    iosBundleId: 'com.example.miniMansion',
+    iosClientId: '1066542021688-v1a98o2dl74eencijjcnjdsodtbrfgku.apps.googleusercontent.com',
+    iosBundleId: 'com.zence.mini.mansion',
   );
 }

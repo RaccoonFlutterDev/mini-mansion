@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1066542021688:android:1f068c549cb2603138bacd",
+        "mobilesdk_app_id": "1:1066542021688:android:2477aa288fcf868938bacd",
         "android_client_info": {
-          "package_name": "com.example.mini_mansion"
+          "package_name": "com.zence.mini.mansion"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1066542021688-fn1f2vac12ka310on5qbf7fr1i4tvkmg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD9SNr3b9KV5Tr4zMC_qTLnfXf2WtSi508"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1066542021688-fn1f2vac12ka310on5qbf7fr1i4tvkmg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1066542021688-lckq63d3ka22nakvqqhh7e6eri53281e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.miniMansion"
+              }
+            }
+          ]
         }
       }
     }
