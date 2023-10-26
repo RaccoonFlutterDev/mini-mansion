@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/auth/login_screen.dart';
 import 'package:mini_mansion/auth/membership_registration.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/constant/variables.dart';
 import 'package:mini_mansion/widgets/button.dart';
 
 class MyProfile extends StatelessWidget {
@@ -31,56 +32,66 @@ class MyProfile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(8.r),
-                  child: CircleAvatar(
-                    radius: 50.r,
-                    backgroundImage: const NetworkImage(
-                      'https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg',
-                    ),
-                  ),
-                ),
-                RichText(
-                  text: TextSpan(
+                Visibility(
+                  visible: auth.currentUser != null,
+                  child: Column(
                     children: [
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: Text(
-                          'Hello! ',
-                          style: Theme.of(context).textTheme.bodyLarge,
+                      Padding(
+                        padding: EdgeInsets.all(8.r),
+                        child: CircleAvatar(
+                          radius: 50.r,
+                          backgroundImage: const NetworkImage(
+                            'https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg',
+                          ),
                         ),
                       ),
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: Text(
-                          'Inamullah Shah',
-                          style: Theme.of(context).textTheme.headlineLarge,
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Text(
+                                'Hello! ',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                            WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Text(
+                                'Inamullah Shah',
+                                style:
+                                    Theme.of(context).textTheme.headlineLarge,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 16.h),
-                Button(
-                  width: Get.width * 0.75.w,
-                  widget: Text(
-                    'Sign in or Create an account',
-                    style: GoogleFonts.oxygen(
-                      color: AppTheme.textLight,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  onPressed: () {
-                    Get.to(
-                      LoginScreen(),
-                      transition: Transition.rightToLeft,
-                      duration: const Duration(
-                        milliseconds: 500,
+                Visibility(
+                  visible: auth.currentUser == null,
+                  child: Button(
+                    width: Get.width * 0.75.w,
+                    widget: Text(
+                      'Sign in or Create an account',
+                      style: GoogleFonts.oxygen(
+                        color: AppTheme.textLight,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
                       ),
-                    );
-                  },
-                  color: AppTheme.primary,
+                    ),
+                    onPressed: () {
+                      Get.to(
+                        LoginScreen(),
+                        transition: Transition.rightToLeft,
+                        duration: const Duration(
+                          milliseconds: 500,
+                        ),
+                      );
+                    },
+                    color: AppTheme.primary,
+                  ),
                 ),
                 SizedBox(height: 16.h),
                 ListTile(
@@ -253,7 +264,7 @@ class MyProfile extends StatelessWidget {
                     size: 16.sp,
                   ),
                 ),
-              SizedBox(height: 79.h),
+                SizedBox(height: 79.h),
               ],
             ),
           ),

@@ -16,6 +16,238 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'firebase/firestore_crud.dart';
 
 class SocialAuth {
+  static Future<void> signUpWithEmail(
+      {required Map<String, dynamic> body}) async {
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: body['email'],
+        password: body['password'],
+      );
+      User? user = userCredential.user;
+      if (user != null) {
+        AuthModel authModel = AuthModel(
+          name: body['username'],
+          email: body['email'],
+          phoneNo: body['phone_no'],
+        );
+        await FirebaseCRUD(collectionPath: 'users')
+            .create(body: authModel.toJson());
+        Get.back();
+        Get.showSnackbar(
+          GetSnackBar(
+            titleText: Text(
+              'Success!',
+              style: Get.context!.textTheme.titleMedium,
+            ),
+            messageText: Text(
+              'Successfully Register',
+              style: Get.context!.textTheme.bodyMedium,
+            ),
+            mainButton: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: SvgPicture.asset(
+                'assets/icons/congratulation.svg',
+                width: 24.w,
+                height: 24.h,
+              ),
+            ),
+            shouldIconPulse: true,
+            snackStyle: SnackStyle.GROUNDED,
+            boxShadows: [
+              BoxShadow(
+                offset: const Offset(0, 0),
+                blurRadius: 4,
+                spreadRadius: 0.5,
+                color: Colors.grey.shade100,
+              )
+            ],
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      } else {
+        Get.showSnackbar(
+          GetSnackBar(
+            titleText: Text(
+              'Error!!!',
+              style: Get.context!.textTheme.titleMedium,
+            ),
+            messageText: Text(
+              'Failed to Register',
+              maxLines: 2,
+              style: Get.context!.textTheme.bodyMedium,
+            ),
+            mainButton: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: SvgPicture.asset(
+                'assets/icons/warning.svg',
+                width: 24.w,
+                height: 24.h,
+              ),
+            ),
+            shouldIconPulse: true,
+            snackStyle: SnackStyle.GROUNDED,
+            boxShadows: [
+              BoxShadow(
+                offset: const Offset(0, 0),
+                blurRadius: 4,
+                spreadRadius: 0.5,
+                color: Colors.grey.shade100,
+              )
+            ],
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      Get.showSnackbar(
+        GetSnackBar(
+          titleText: Text(
+            'Error!!!',
+            style: Get.context!.textTheme.titleMedium,
+          ),
+          messageText: Text(
+            '$e',
+            maxLines: 2,
+            style: Get.context!.textTheme.bodyMedium,
+          ),
+          mainButton: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: SvgPicture.asset(
+              'assets/icons/warning.svg',
+              width: 24.w,
+              height: 24.h,
+            ),
+          ),
+          shouldIconPulse: true,
+          snackStyle: SnackStyle.GROUNDED,
+          boxShadows: [
+            BoxShadow(
+              offset: const Offset(0, 0),
+              blurRadius: 4,
+              spreadRadius: 0.5,
+              color: Colors.grey.shade100,
+            )
+          ],
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      rethrow;
+    }
+  }
+
+// Login function
+  static Future<void> signInWithEmail(
+      {required Map<String, dynamic> body}) async {
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: body['email'],
+        password: body['password'],
+      );
+      User? user = userCredential.user;
+      if (user != null) {
+        Get.back();
+        Get.showSnackbar(
+          GetSnackBar(
+            titleText: Text(
+              'Success!',
+              style: Get.context!.textTheme.titleMedium,
+            ),
+            messageText: Text(
+              'Successfully Login',
+              style: Get.context!.textTheme.bodyMedium,
+            ),
+            mainButton: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: SvgPicture.asset(
+                'assets/icons/congratulation.svg',
+                width: 24.w,
+                height: 24.h,
+              ),
+            ),
+            shouldIconPulse: true,
+            snackStyle: SnackStyle.GROUNDED,
+            boxShadows: [
+              BoxShadow(
+                offset: const Offset(0, 0),
+                blurRadius: 4,
+                spreadRadius: 0.5,
+                color: Colors.grey.shade100,
+              )
+            ],
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      } else {
+        Get.showSnackbar(
+          GetSnackBar(
+            titleText: Text(
+              'Error!!!',
+              style: Get.context!.textTheme.titleMedium,
+            ),
+            messageText: Text(
+              'Failed to Login',
+              maxLines: 2,
+              style: Get.context!.textTheme.bodyMedium,
+            ),
+            mainButton: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: SvgPicture.asset(
+                'assets/icons/warning.svg',
+                width: 24.w,
+                height: 24.h,
+              ),
+            ),
+            shouldIconPulse: true,
+            snackStyle: SnackStyle.GROUNDED,
+            boxShadows: [
+              BoxShadow(
+                offset: const Offset(0, 0),
+                blurRadius: 4,
+                spreadRadius: 0.5,
+                color: Colors.grey.shade100,
+              )
+            ],
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      Get.showSnackbar(
+        GetSnackBar(
+          titleText: Text(
+            'Error!!!',
+            style: Get.context!.textTheme.titleMedium,
+          ),
+          messageText: Text(
+            '$e',
+            maxLines: 2,
+            style: Get.context!.textTheme.bodyMedium,
+          ),
+          mainButton: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: SvgPicture.asset(
+              'assets/icons/warning.svg',
+              width: 24.w,
+              height: 24.h,
+            ),
+          ),
+          shouldIconPulse: true,
+          snackStyle: SnackStyle.GROUNDED,
+          boxShadows: [
+            BoxShadow(
+              offset: const Offset(0, 0),
+              blurRadius: 4,
+              spreadRadius: 0.5,
+              color: Colors.grey.shade100,
+            )
+          ],
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      rethrow;
+    }
+  }
+
   static Future<UserCredential> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
