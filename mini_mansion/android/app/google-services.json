@@ -1,43 +1,26 @@
 {
   "project_info": {
-    "project_number": "1066542021688",
-    "project_id": "mini-mansion-8bc39",
-    "storage_bucket": "mini-mansion-8bc39.appspot.com"
+    "project_number": "770336687157",
+    "project_id": "minimansion-e685f",
+    "storage_bucket": "minimansion-e685f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1066542021688:android:2477aa288fcf868938bacd",
+        "mobilesdk_app_id": "1:770336687157:android:f95b9e73ef419bda555d7c",
         "android_client_info": {
           "package_name": "com.zence.mini.mansion"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1066542021688-fn1f2vac12ka310on5qbf7fr1i4tvkmg.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD9SNr3b9KV5Tr4zMC_qTLnfXf2WtSi508"
+          "current_key": "AIzaSyBYwaTmtAQga2SMLX20OqBKFxthFWc3KZE"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1066542021688-fn1f2vac12ka310on5qbf7fr1i4tvkmg.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1066542021688-lckq63d3ka22nakvqqhh7e6eri53281e.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.miniMansion"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

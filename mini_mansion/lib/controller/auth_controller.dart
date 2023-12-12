@@ -24,7 +24,8 @@ class SocialAuth {
         password: body['password'],
       );
       User? user = userCredential.user;
-      if (user != null) {
+      var uid = user?.uid;
+      if (user != null && uid!=null) {
         AuthModel authModel = AuthModel(
           name: body['username'],
           email: body['email'],

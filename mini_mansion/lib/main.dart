@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/functions.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constant/variables.dart';
 import 'home/dashboard.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +23,6 @@ Future<void> main() async {
   await Functions.checkPermissions();
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -47,7 +46,8 @@ class MyApp extends StatelessWidget {
           title: 'Mini Mansion',
           builder: (context, child) {
             return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              data: MediaQuery.of(context)
+                  .copyWith(textScaler: const TextScaler.linear(1.0)),
               child: child!,
             );
           },

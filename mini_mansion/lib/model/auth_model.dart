@@ -9,6 +9,7 @@ class AuthModel {
   final String email;
   String? phoneNo;
 
+
   AuthModel({
     required this.name,
     required this.email,

@@ -50,20 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD9SNr3b9KV5Tr4zMC_qTLnfXf2WtSi508',
-    appId: '1:1066542021688:android:2477aa288fcf868938bacd',
-    messagingSenderId: '1066542021688',
-    projectId: 'mini-mansion-8bc39',
-    storageBucket: 'mini-mansion-8bc39.appspot.com',
+    apiKey: 'AIzaSyBYwaTmtAQga2SMLX20OqBKFxthFWc3KZE',
+    appId: '1:770336687157:android:f95b9e73ef419bda555d7c',
+    messagingSenderId: '770336687157',
+    projectId: 'minimansion-e685f',
+    storageBucket: 'minimansion-e685f.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAW0SmuIPQH2CqcsWGMUD2shQFbhY_-F0A',
-    appId: '1:1066542021688:ios:0957130697c313f138bacd',
-    messagingSenderId: '1066542021688',
-    projectId: 'mini-mansion-8bc39',
-    storageBucket: 'mini-mansion-8bc39.appspot.com',
-    iosClientId: '1066542021688-v1a98o2dl74eencijjcnjdsodtbrfgku.apps.googleusercontent.com',
+    apiKey: 'AIzaSyB9s6LyFnOhhMopncJxzSWO5koLqHpVHWI',
+    appId: '1:770336687157:ios:5c8466fa754045c5555d7c',
+    messagingSenderId: '770336687157',
+    projectId: 'minimansion-e685f',
+    storageBucket: 'minimansion-e685f.appspot.com',
     iosBundleId: 'com.zence.mini.mansion',
   );
 }

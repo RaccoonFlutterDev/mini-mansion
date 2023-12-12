@@ -38,7 +38,7 @@ dependencies:
   get: ^4.6.6
   flutter_screenutil: ^5.9.0
   shimmer: ^3.0.0
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.3.0
   shared_preferences: ^2.2.1
   google_fonts: ^6.1.0
   introduction_screen: ^3.1.11
