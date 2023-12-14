@@ -6,6 +6,7 @@ import 'package:mini_mansion/auth/login_screen.dart';
 import 'package:mini_mansion/auth/membership_registration.dart';
 import 'package:mini_mansion/constant/theme.dart';
 import 'package:mini_mansion/constant/variables.dart';
+import 'package:mini_mansion/controller/auth_controller.dart';
 import 'package:mini_mansion/widgets/button.dart';
 
 class MyProfile extends StatelessWidget {
@@ -93,7 +94,7 @@ class MyProfile extends StatelessWidget {
                     color: AppTheme.primary,
                   ),
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 12.h),
                 ListTile(
                   onTap: () {},
                   contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
@@ -264,6 +265,23 @@ class MyProfile extends StatelessWidget {
                     size: 16.sp,
                   ),
                 ),
+                auth.currentUser != null
+                    ? ListTile(
+                        onTap: () {
+                          SocialAuth.signOut();
+                        },
+                        contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
+                        leading: Icon(
+                          Icons.logout_outlined,
+                          color: Theme.of(context).colorScheme.surface,
+                          size: 20.sp,
+                        ),
+                        title: Text(
+                          'Logout',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
                 SizedBox(height: 79.h),
               ],
             ),

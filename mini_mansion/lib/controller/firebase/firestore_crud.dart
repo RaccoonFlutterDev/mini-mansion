@@ -13,7 +13,7 @@ class FirebaseCRUD {
     final CollectionReference usersCollection =
         FirebaseFirestore.instance.collection(collectionPath);
     try {
-      await usersCollection.add(body);
+      await usersCollection.doc(body["uid"]).set(body);
       Get.showSnackbar(
         GetSnackBar(
           titleText: Text(

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/functions.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/constant/variables.dart';
+import 'package:mini_mansion/controller/membership_registeration_controller.dart';
 import 'package:mini_mansion/widgets/button.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
@@ -19,6 +23,8 @@ class MembershipRegistration extends StatefulWidget {
 }
 
 class _MembershipRegistrationState extends State<MembershipRegistration> {
+  Map<String, dynamic> body = {};
+
   List<DropdownMenuEntry> currencies = [];
   List<DropdownMenuItem> countries = [];
   List<Map<String, dynamic>> propertyType = [
@@ -132,6 +138,8 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                           return InkWell(
                             onTap: () {
                               currentProperty.value = index;
+                              body['propertyType'] =
+                                  propertyType[index]['value'];
                             },
                             child: CategoryList(
                               isSelected: (currentProperty.value == index).obs,
@@ -193,6 +201,8 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                           label: '${accommodateValue.value.round()}',
                           onChanged: (double newValue) {
                             accommodateValue.value = newValue.toInt();
+                            body['accommodates'] =
+                                accommodateValue.value.toString();
                           },
                           semanticFormatterCallback: (double newValue) {
                             return '$newValue';
@@ -241,6 +251,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                           label: '${bathroomValue.value.round()}',
                           onChanged: (double newValue) {
                             bathroomValue.value = newValue.toInt();
+                            body['bathrooms'] = bathroomValue.value.toString();
                           },
                           semanticFormatterCallback: (double newValue) {
                             return '$newValue';
@@ -289,6 +300,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                           label: '${bedroomValue.value.round()}',
                           onChanged: (double newValue) {
                             bedroomValue.value = newValue.toInt();
+                            body['bedrooms'] = bedroomValue.value.toString();
                           },
                           semanticFormatterCallback: (double newValue) {
                             return '$newValue';
@@ -326,6 +338,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   cursorColor: AppTheme.primary,
                   keyboardType: TextInputType.name,
                   style: Theme.of(context).textTheme.bodySmall,
+                  onChanged: (value) {
+                    body['streetAddress'] = value;
+                  },
                   decoration: InputDecoration(
                     label: const Text('Street Address'),
                     isDense: true,
@@ -362,7 +377,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   padding: EdgeInsets.zero,
                   items: countries,
                   isDense: true,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    body['country'] = value;
+                  },
                   style: Theme.of(context).textTheme.bodySmall,
                   decoration: InputDecoration(
                     contentPadding:
@@ -402,6 +419,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   cursorColor: AppTheme.primary,
                   keyboardType: TextInputType.name,
                   style: Theme.of(context).textTheme.bodySmall,
+                  onChanged: (value) {
+                    body['city'] = value;
+                  },
                   decoration: InputDecoration(
                     label: const Text('City'),
                     isDense: true,
@@ -441,6 +461,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                         cursorColor: AppTheme.primary,
                         keyboardType: TextInputType.name,
                         style: Theme.of(context).textTheme.bodySmall,
+                        onChanged: (value) {
+                          body['state'] = value;
+                        },
                         decoration: InputDecoration(
                           label: const Text('State'),
                           isDense: true,
@@ -480,6 +503,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                         cursorColor: AppTheme.primary,
                         keyboardType: TextInputType.number,
                         style: Theme.of(context).textTheme.bodySmall,
+                        onChanged: (value) {
+                          body['zipCode'] = value;
+                        },
                         decoration: InputDecoration(
                           label: const Text('Zip Code'),
                           isDense: true,
@@ -536,6 +562,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   cursorColor: AppTheme.primary,
                   keyboardType: TextInputType.name,
                   style: Theme.of(context).textTheme.bodySmall,
+                  onChanged: (value) {
+                    body['ownerName'] = value;
+                  },
                   decoration: InputDecoration(
                     label: const Text('Owner Name'),
                     isDense: true,
@@ -572,6 +601,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   cursorColor: AppTheme.primary,
                   keyboardType: TextInputType.name,
                   style: Theme.of(context).textTheme.bodySmall,
+                  onChanged: (value) {
+                    body['nameYourProperty'] = value;
+                  },
                   decoration: InputDecoration(
                     label: const Text('Name your property'),
                     isDense: true,
@@ -610,6 +642,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   maxLines: 6,
                   style: Theme.of(context).textTheme.bodySmall,
                   keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    body['describeYourPlace'] = value;
+                  },
                   decoration: InputDecoration(
                     label: const Text('Describe your place'),
                     isDense: true,
@@ -667,6 +702,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   maxLines: 6,
                   style: Theme.of(context).textTheme.bodySmall,
                   keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    body['guestsGetYourProperty'] = value;
+                  },
                   decoration: InputDecoration(
                     isDense: true,
                     hintText:
@@ -771,7 +809,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
-                onTap: (values) {},
+                onTap: (values) {
+                  body['recommended'] = values;
+                },
               ),
               Padding(
                 padding: EdgeInsets.all(8.h),
@@ -823,7 +863,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
-                onTap: (values) {},
+                onTap: (values) {
+                  body['standard'] = values;
+                },
               ),
               Padding(
                 padding: EdgeInsets.all(8.h),
@@ -873,7 +915,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
-                onTap: (values) {},
+                onTap: (values) {
+                  body['kitchen'] = values;
+                },
               ),
               Padding(
                 padding: EdgeInsets.all(8.h),
@@ -923,7 +967,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
-                onTap: (values) {},
+                onTap: (values) {
+                  body['bathroom'] = values;
+                },
               ),
               Padding(
                 padding: EdgeInsets.all(8.h),
@@ -974,7 +1020,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
-                onTap: (values) {},
+                onTap: (values) {
+                  body['safetyAndClean'] = values;
+                },
               ),
               Padding(
                 padding: EdgeInsets.all(8.h),
@@ -1025,7 +1073,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
-                onTap: (values) {},
+                onTap: (values) {
+                  body['other'] = values;
+                },
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
@@ -1056,6 +1106,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                         cursorColor: AppTheme.primary,
                         style: Theme.of(context).textTheme.bodySmall,
                         keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          body['nightlyPrice'] = value;
+                        },
                         decoration: InputDecoration(
                           isDense: true,
                           label: const Text('Nightly Price'),
@@ -1141,6 +1194,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                         cursorColor: AppTheme.primary,
                         keyboardType: TextInputType.name,
                         style: Theme.of(context).textTheme.bodySmall,
+                        onChanged: (value) {
+                          body['weeklyOff'] = value;
+                        },
                         decoration: InputDecoration(
                           label: const Text('%Off'),
                           isDense: true,
@@ -1180,6 +1236,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                         cursorColor: AppTheme.primary,
                         keyboardType: TextInputType.number,
                         style: Theme.of(context).textTheme.bodySmall,
+                        onChanged: (value) {
+                          body['weeklyPerNight'] = value;
+                        },
                         decoration: InputDecoration(
                           label: const Text('Per Night'),
                           isDense: true,
@@ -1243,6 +1302,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                         cursorColor: AppTheme.primary,
                         keyboardType: TextInputType.name,
                         style: Theme.of(context).textTheme.bodySmall,
+                        onChanged: (value) {
+                          body['monthlyOff'] = value;
+                        },
                         decoration: InputDecoration(
                           label: const Text('%Off'),
                           isDense: true,
@@ -1282,6 +1344,9 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                         cursorColor: AppTheme.primary,
                         keyboardType: TextInputType.number,
                         style: Theme.of(context).textTheme.bodySmall,
+                        onChanged: (value) {
+                          body['monthlyPerNight'] = value;
+                        },
                         decoration: InputDecoration(
                           label: const Text('Per Night'),
                           isDense: true,
@@ -1340,7 +1405,19 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   height: 50.h,
                   borderRadius: 8.r,
                   color: AppTheme.primary,
-                  onPressed: () {},
+                  onPressed: () {
+                    final uid = auth.currentUser?.uid;
+                    if (uid != null) {
+                      body['uid'] = uid;
+                      MembershipController.addMembershipData(body: body);
+                    } else {
+                      Get.showSnackbar(
+                        const GetSnackBar(
+                          titleText: Text('Login First'),
+                        ),
+                      );
+                    }
+                  },
                   widget: Text(
                     'Submit Details',
                     style: GoogleFonts.oxygen(

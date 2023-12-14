@@ -25,11 +25,12 @@ class SocialAuth {
       );
       User? user = userCredential.user;
       var uid = user?.uid;
-      if (user != null && uid!=null) {
+      if (user != null && uid != null) {
         AuthModel authModel = AuthModel(
           name: body['username'],
           email: body['email'],
           phoneNo: body['phone_no'],
+          uid: uid,
         );
         await FirebaseCRUD(collectionPath: 'users')
             .create(body: authModel.toJson());
@@ -309,6 +310,7 @@ class SocialAuth {
 
   static Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
+    isLoggedIn = false.obs;
   }
 
   static Future<UserCredential> signInWithFacebook() async {
