@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/model/membership_model.dart';
 import 'package:mini_mansion/widgets/button.dart';
 import 'package:mini_mansion/widgets/cards.dart';
 import 'package:rating_summary/rating_summary.dart';
@@ -15,8 +16,10 @@ import 'package:readmore/readmore.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HotelDetails extends StatefulWidget {
-  final String imageUrl;
-  const HotelDetails({super.key, required this.imageUrl});
+  // final String imageUrl;
+  final MembershipModel membershipModel;
+
+  const HotelDetails({super.key, required this.membershipModel});
 
   @override
   State<HotelDetails> createState() => _HotelDetailsState();
@@ -82,11 +85,11 @@ class _HotelDetailsState extends State<HotelDetails> {
         ListTile(
           dense: true,
           title: Text(
-            'Grand Royal Hotel',
+            widget.membershipModel.nameYourProperty,
             style: Theme.of(context).textTheme.headlineLarge,
           ),
           subtitle: Text(
-            'Wembley, Landon',
+            '${widget.membershipModel.city}, ${widget.membershipModel.country}',
             maxLines: 1,
             style: Theme.of(context).textTheme.labelSmall,
           ),
@@ -94,7 +97,7 @@ class _HotelDetailsState extends State<HotelDetails> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '\$180',
+                '\$${widget.membershipModel.nightlyPrice}',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               Text(
@@ -117,7 +120,7 @@ class _HotelDetailsState extends State<HotelDetails> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           child: ReadMoreText(
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+            widget.membershipModel.describeYourPlace,
             trimLines: 2,
             colorClickableText: AppTheme.primary,
             trimMode: TrimMode.Line,
@@ -202,7 +205,7 @@ class _HotelDetailsState extends State<HotelDetails> {
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            itemCount: 5,
+            itemCount: widget.membershipModel.hotelImages.length,
             itemBuilder: (context, index) {
               return Container(
                 height: 100.w,
@@ -212,7 +215,8 @@ class _HotelDetailsState extends State<HotelDetails> {
                   borderRadius: BorderRadius.circular(16.r),
                   color: Theme.of(context).scaffoldBackgroundColor,
                   image: DecorationImage(
-                    image: NetworkImage(widget.imageUrl),
+                    image:
+                        NetworkImage(widget.membershipModel.hotelImages[index]),
                     fit: BoxFit.cover,
                   ),
                   boxShadow: [
@@ -342,8 +346,9 @@ class _HotelDetailsState extends State<HotelDetails> {
     return Stack(
       children: [
         CachedNetworkImage(
-          imageUrl: widget.imageUrl,
+          imageUrl: widget.membershipModel.hotelImages[0],
           height: Get.height,
+          width: Get.width,
           placeholder: (context, url) => Shimmer.fromColors(
             baseColor: Theme.of(context).cardColor,
             highlightColor: AppTheme.primary.withOpacity(0.5),

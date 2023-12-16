@@ -30,6 +30,7 @@ class MembershipModel {
   List<String> bathroom;
   List<String> safetyAndClean;
   List<String> other;
+  List<String> hotelImages;
   String nightlyPrice;
   String weeklyOff;
   String weeklyPerNight;
@@ -61,6 +62,7 @@ class MembershipModel {
     required this.weeklyPerNight,
     required this.monthlyOff,
     required this.monthlyPerNight,
+    required this.hotelImages,
   });
 
   factory MembershipModel.fromJson(Map<String, dynamic> json) =>
@@ -82,6 +84,7 @@ class MembershipModel {
         standard: List<String>.from(json["standard"].map((x) => x)),
         kitchen: List<String>.from(json["kitchen"].map((x) => x)),
         bathroom: List<String>.from(json["bathroom"].map((x) => x)),
+        hotelImages: List<String>.from(json["hotelImages"].map((x) => x)),
         safetyAndClean: List<String>.from(json["safetyAndClean"].map((x) => x)),
         other: List<String>.from(json["other"].map((x) => x)),
         nightlyPrice: json["nightlyPrice"],
@@ -92,7 +95,7 @@ class MembershipModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "uid":uid,
+        "uid": uid,
         "propertyType": propertyType,
         "accommodates": accommodates,
         "bedrooms": bedrooms,
@@ -109,6 +112,7 @@ class MembershipModel {
         "standard": List<dynamic>.from(standard.map((x) => x)),
         "kitchen": List<dynamic>.from(kitchen.map((x) => x)),
         "bathroom": List<dynamic>.from(bathroom.map((x) => x)),
+        "hotelImages": List<dynamic>.from(hotelImages.map((x) => x)),
         "safetyAndClean": List<dynamic>.from(safetyAndClean.map((x) => x)),
         "other": List<dynamic>.from(other.map((x) => x)),
         "nightlyPrice": nightlyPrice,

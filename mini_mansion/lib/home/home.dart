@@ -6,7 +6,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/controller/firebase/firestore_crud.dart';
+import 'package:mini_mansion/controller/firebase/firestore_helper.dart';
 import 'package:mini_mansion/home/hotel_details.dart';
+import 'package:mini_mansion/model/membership_model.dart';
 import 'package:mini_mansion/widgets/button.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -23,6 +26,9 @@ class _MyHomePageState extends State<MyHomePage> {
   var currentSlide = 0.obs;
   var sliderImages = [].obs;
   final CarouselController _controller = CarouselController();
+  List<MembershipModel> hotelsList = [];
+  bool isLoading = false;
+
   @override
   void initState() {
     sliderImages.value = [
@@ -31,7 +37,19 @@ class _MyHomePageState extends State<MyHomePage> {
       'https://img.freepik.com/free-photo/luxury-modern-style-bedroom-interior-hotel-bedroom-generative-ai-illustration_1258-151610.jpg',
       'https://img.freepik.com/premium-photo/light-generative-ai-luxurious-hotel-room_28914-16061.jpg'
     ];
+    getHotels();
+    setState(() {});
     super.initState();
+  }
+
+  void getHotels() async {
+    setState(() {
+      isLoading = true;
+    });
+    hotelsList = await FirestoreHelper().getHotels();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -231,32 +249,43 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      SizedBox(
-        height: 200.h,
-        child: ListView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 8.w),
-          physics: const BouncingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          itemCount: sliderImages.length,
-          itemBuilder: (context, index) {
-            return LargeCard(
-              onPressed: () {
-                Get.to(
-                  HotelDetails(imageUrl: sliderImages[index]),
-                  transition: Transition.rightToLeft,
-                  duration: const Duration(
-                    milliseconds: 500,
-                  ),
-                );
-              },
-              width: Get.width - 50.w,
+      isLoading
+          ? Center(
+              child: Container(
+                height: 100,
+                width: 100,
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(),
+              ),
+            )
+          : SizedBox(
               height: 200.h,
-              color: Theme.of(context).scaffoldBackgroundColor,
-              imageUrl: sliderImages[index],
-            );
-          },
-        ),
-      ),
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: hotelsList.length,
+                itemBuilder: (context, index) {
+                  return LargeCard(
+                    onPressed: () {
+                      Get.to(
+                        HotelDetails(
+                        membershipModel: hotelsList[index]),
+                        transition: Transition.rightToLeft,
+                        duration: const Duration(
+                          milliseconds: 500,
+                        ),
+                      );
+                    },
+                    width: Get.width - 50.w,
+                    height: 200.h,
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    membershipModel: hotelsList[index],
+                    // imageUrl: ,
+                  );
+                },
+              ),
+            ),
       Align(
         alignment: Alignment.centerLeft,
         child: Padding(

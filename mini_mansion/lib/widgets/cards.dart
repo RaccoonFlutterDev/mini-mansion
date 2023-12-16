@@ -6,6 +6,7 @@ import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/model/membership_model.dart';
 import 'package:mini_mansion/widgets/button.dart';
 import 'package:readmore/readmore.dart';
 import 'package:shimmer/shimmer.dart';
@@ -16,7 +17,8 @@ class LargeCard extends StatelessWidget {
   final double height;
   final double borderRadius;
   final Color color;
-  final String imageUrl;
+  // final String imageUrl;
+  final MembershipModel membershipModel;
 
   LargeCard({
     super.key,
@@ -25,7 +27,9 @@ class LargeCard extends StatelessWidget {
     required this.height,
     this.borderRadius = 16,
     required this.color,
-    required this.imageUrl,
+    required this.membershipModel,
+    // required this.imageUrl,
+    // mem
   });
 
   var isFavorite = false.obs;
@@ -58,7 +62,7 @@ class LargeCard extends StatelessWidget {
               child: CachedNetworkImage(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                imageUrl: imageUrl,
+                imageUrl: membershipModel.hotelImages[0],
                 placeholder: (context, url) => Shimmer.fromColors(
                   baseColor: Theme.of(context).cardColor,
                   highlightColor: AppTheme.primary.withOpacity(0.5),
@@ -120,7 +124,7 @@ class LargeCard extends StatelessWidget {
                 child: ListTile(
                   dense: true,
                   title: Text(
-                    'Grand Royal Hotel',
+                    membershipModel.nameYourProperty,
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   subtitle: Column(
@@ -164,7 +168,7 @@ class LargeCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        '\$180',
+                        '\$${membershipModel.nightlyPrice}',
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       Text(

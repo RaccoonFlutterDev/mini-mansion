@@ -1,19 +1,22 @@
-import 'dart:convert';
+import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:map_autocomplete_field/map_autocomplete_field.dart';
 import 'package:mini_mansion/constant/functions.dart';
 import 'package:mini_mansion/constant/theme.dart';
 import 'package:mini_mansion/constant/variables.dart';
 import 'package:mini_mansion/controller/membership_registeration_controller.dart';
 import 'package:mini_mansion/widgets/button.dart';
+import 'package:mini_mansion/widgets/upload_images/images_list.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../widgets/category_list.dart';
-import '../widgets/upload_images/images_list.dart';
 
 class MembershipRegistration extends StatefulWidget {
   const MembershipRegistration({super.key});
@@ -24,9 +27,10 @@ class MembershipRegistration extends StatefulWidget {
 
 class _MembershipRegistrationState extends State<MembershipRegistration> {
   Map<String, dynamic> body = {};
-
+  final addressCtrl = TextEditingController();
   List<DropdownMenuEntry> currencies = [];
   List<DropdownMenuItem> countries = [];
+  // final ImageController imageController = Get.put(ImageController());
   List<Map<String, dynamic>> propertyType = [
     {
       "title": "Lodging",
@@ -371,6 +375,62 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   ),
                 ),
               ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(vertical: 8.h),
+              //   child: MapAutoCompleteField(
+              //     googleMapApiKey: "AIzaSyAgxwgSFTphm5r_PPjysprlp0MZEaQCtVk",
+              //     controller: addressCtrl,
+              //     itemBuilder: (BuildContext context, suggestion) {
+              //       return ListTile(
+              //         leading: const Icon(Icons.add),
+              //         title: Text(suggestion.description),
+              //       );
+              //     },
+              //     onSuggestionSelected: (suggestion) async {
+              //       // Replace with the actual place ID
+              //       try {
+              //         Map<String, dynamic> location =
+              //             await Functions.fetchLocationFromPlaceId(
+              //                 suggestion.placeId,
+              //                 "AIzaSyCrx7_i9zUPFfcR5aWmshWzb38xhSSQ_O4");
+              //         double latitude = location['lat'];
+              //         double longitude = location['lng'];
+              //         addressCtrl.text = latitude.toString();
+              //         print('Latitude: $latitude, Longitude: $longitude');
+              //       } catch (e) {
+              //         print('Error: $e');
+              //       }
+              //     },
+              //     inputDecoration: InputDecoration(
+              //       label: const Text('Street Address'),
+              //       isDense: true,
+              //       hintStyle: Theme.of(context).textTheme.labelSmall,
+              //       labelStyle: Theme.of(context).textTheme.titleSmall,
+              //       alignLabelWithHint: true,
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(8.r),
+              //         borderSide: BorderSide(
+              //           width: 1.w,
+              //           color: AppTheme.textHint,
+              //         ),
+              //       ),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(8.r),
+              //         borderSide: BorderSide(
+              //           width: 1.w,
+              //           color: AppTheme.textHint,
+              //         ),
+              //       ),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(8.r),
+              //         borderSide: BorderSide(
+              //           width: 1.w,
+              //           color: AppTheme.primary,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.h),
                 child: DropdownButtonFormField(
@@ -1398,18 +1458,62 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                   ),
                 ],
               ),
-              const ImagesList(),
+              // const ImagesList(),
+              Row(
+                mainAxisAlignment: imageList.isEmpty
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.sp),
+                    child: _buildImagePickerButton(),
+                  ),
+                  imageList.isNotEmpty
+                      ? Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: _buildImageList(),
+                          ),
+                        )
+                      : const Padding(
+                          padding: EdgeInsets.fromLTRB(20, 8, 8, 8),
+                          child: Center(child: Text('No Image Selected')),
+                        ),
+                ],
+              ),
+
               Center(
                 child: Button(
                   width: 230.w,
                   height: 50.h,
                   borderRadius: 8.r,
                   color: AppTheme.primary,
-                  onPressed: () {
+                  onPressed: () async {
                     final uid = auth.currentUser?.uid;
                     if (uid != null) {
                       body['uid'] = uid;
-                      MembershipController.addMembershipData(body: body);
+                      List<String> imageUrls = [];
+                      for (var imageFile in imageList) {
+                        String imageName =
+                            DateTime.now().millisecondsSinceEpoch.toString();
+                        Reference storageReference = FirebaseStorage.instance
+                            .ref()
+                            .child('homes/$imageName.jpg');
+                        UploadTask uploadTask =
+                            storageReference.putFile(File(imageFile.path));
+
+                        // Get download URL of the uploaded image
+                        TaskSnapshot taskSnapshot =
+                            await uploadTask.whenComplete(() => null);
+                        String imageUrl =
+                            await taskSnapshot.ref.getDownloadURL();
+                        imageUrls.add(imageUrl);
+                      }
+
+                      if (imageUrls.isNotEmpty) {
+                        body['hotelImages'] = imageUrls;
+                        MembershipController.addMembershipData(body: body);
+                      }
                     } else {
                       Get.showSnackbar(
                         const GetSnackBar(
@@ -1433,5 +1537,83 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
         ),
       ),
     );
+  }
+
+  Widget _buildImageList() {
+    return SizedBox(
+      height: 150,
+      child: ListView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemCount: imageList.length,
+        itemBuilder: (context, index) {
+          print("imagesList: ${imageList.length}");
+          return Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 14, right: 10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16.r),
+                  child: Image.file(
+                    File(imageList[index].path),
+                    // width: 100,
+                    // height: 100,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 0,
+                right: 8,
+                child: InkWell(
+                  onTap: () {
+                    // imageController.removeImage(index);
+                    imageList.removeAt(index);
+                    body['hotelImages'] = imageList;
+
+                    setState(() {});
+                  },
+                  child: const Icon(
+                    Icons.highlight_remove_sharp,
+                    size: 17,
+                    color: Colors.red,
+                  ),
+                ),
+              )
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildImagePickerButton() {
+    return InkWell(
+      onTap: _pickImages,
+      child: Container(
+        height: 55.h,
+        width: 55.w,
+        decoration: BoxDecoration(
+          color: AppTheme.primary,
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Future<void> _pickImages() async {
+    try {
+      final pickedImages = await ImagePicker().pickMultiImage();
+      if (pickedImages.isNotEmpty) {
+        setState(() {
+          imageList.addAll(pickedImages);
+          body['hotelImages'] = imageList;
+        });
+      }
+    } catch (e) {
+      print('Error picking images: $e');
+      // Handle errors here
+    }
   }
 }

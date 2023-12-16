@@ -10,3 +10,5 @@ final Location location = Location();
 late final FirebaseApp app;
 late final FirebaseAuth auth;
 var isLoggedIn = false.obs;
+final RxList imageList = [].obs;
+
