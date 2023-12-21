@@ -11,6 +11,7 @@ import 'package:map_autocomplete_field/map_autocomplete_field.dart';
 import 'package:mini_mansion/constant/functions.dart';
 import 'package:mini_mansion/constant/theme.dart';
 import 'package:mini_mansion/constant/variables.dart';
+import 'package:mini_mansion/controller/app_controller.dart';
 import 'package:mini_mansion/controller/membership_registeration_controller.dart';
 import 'package:mini_mansion/widgets/button.dart';
 import 'package:mini_mansion/widgets/upload_images/images_list.dart';
@@ -27,6 +28,7 @@ class MembershipRegistration extends StatefulWidget {
 
 class _MembershipRegistrationState extends State<MembershipRegistration> {
   Map<String, dynamic> body = {};
+  final AppController appController = Get.put(AppController());
   final addressCtrl = TextEditingController();
   List<DropdownMenuEntry> currencies = [];
   List<DropdownMenuItem> countries = [];
@@ -1512,14 +1514,12 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
 
                       if (imageUrls.isNotEmpty) {
                         body['hotelImages'] = imageUrls;
-                        MembershipController.addMembershipData(body: body);
+                        // MembershipController.addMembershipData(body: body);
+                        appController.addedMembership(body);
+                        showSnackbarMsg('Success!', 'Successfully Created!');
                       }
                     } else {
-                      Get.showSnackbar(
-                        const GetSnackBar(
-                          titleText: Text('Login First'),
-                        ),
-                      );
+                      showSnackbarMsg('Please!', 'Login first');
                     }
                   },
                   widget: Text(

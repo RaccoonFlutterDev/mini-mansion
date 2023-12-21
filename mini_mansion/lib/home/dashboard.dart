@@ -2,13 +2,16 @@ import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mini_mansion/controller/app_controller.dart';
 import 'package:mini_mansion/home/favorites.dart';
 import 'package:mini_mansion/home/profile.dart';
 
 import 'home.dart';
 
 class MyDashboard extends StatefulWidget {
-  const MyDashboard({super.key});
+  const MyDashboard({
+    super.key,
+  });
 
   @override
   State<MyDashboard> createState() => _MyDashboardState();
@@ -22,7 +25,9 @@ class _MyDashboardState extends State<MyDashboard> {
   void initState() {
     pages = [
       const FavoritesScreen(),
-      const MyHomePage(),
+      MyHomePage(
+      
+      ),
       const MyProfile(),
     ].obs;
     super.initState();

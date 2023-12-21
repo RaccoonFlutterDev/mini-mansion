@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,10 +9,16 @@ import 'package:mini_mansion/constant/theme.dart';
 import 'package:mini_mansion/constant/variables.dart';
 import 'package:mini_mansion/controller/auth_controller.dart';
 import 'package:mini_mansion/widgets/button.dart';
+import 'package:mini_mansion/widgets/profile_menu_button_tile.dart';
 
-class MyProfile extends StatelessWidget {
+class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
 
+  @override
+  State<MyProfile> createState() => _MyProfileState();
+}
+
+class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,105 +40,158 @@ class MyProfile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Visibility(
-                  visible: auth.currentUser != null,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.r),
-                        child: CircleAvatar(
-                          radius: 50.r,
-                          backgroundImage: const NetworkImage(
-                            'https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg',
-                          ),
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            WidgetSpan(
-                              alignment: PlaceholderAlignment.middle,
-                              child: Text(
-                                'Hello! ',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            ),
-                            WidgetSpan(
-                              alignment: PlaceholderAlignment.middle,
-                              child: Text(
-                                'Inamullah Shah',
-                                style:
-                                    Theme.of(context).textTheme.headlineLarge,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Visibility(
-                  visible: auth.currentUser == null,
-                  child: Button(
-                    width: Get.width * 0.75.w,
-                    widget: Text(
-                      'Sign in or Create an account',
-                      style: GoogleFonts.oxygen(
-                        color: AppTheme.textLight,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    onPressed: () {
-                      Get.to(
-                        LoginScreen(),
-                        transition: Transition.rightToLeft,
-                        duration: const Duration(
-                          milliseconds: 500,
-                        ),
+                // auth.currentUser != null
+                //     ? Column(
+                //         children: [
+                //           Padding(
+                //             padding: EdgeInsets.all(8.r),
+                //             child: CircleAvatar(
+                //               radius: 50.r,
+                //               backgroundImage: const NetworkImage(
+                //                 'https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg',
+                //               ),
+                //             ),
+                //           ),
+                //           RichText(
+                //             text: TextSpan(
+                //               children: [
+                //                 WidgetSpan(
+                //                   alignment: PlaceholderAlignment.middle,
+                //                   child: Text(
+                //                     'Hello! ',
+                //                     style:
+                //                         Theme.of(context).textTheme.bodyLarge,
+                //                   ),
+                //                 ),
+                //                 WidgetSpan(
+                //                   alignment: PlaceholderAlignment.middle,
+                //                   child: Text(
+                //                     'Inamullah Shah',
+                //                     style: Theme.of(context)
+                //                         .textTheme
+                //                         .headlineLarge,
+                //                   ),
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //         ],
+                //       )
+                //     : Button(
+                //         width: Get.width * 0.75.w,
+                //         widget: Text(
+                //           'Sign in or Create an account',
+                //           style: GoogleFonts.oxygen(
+                //             color: AppTheme.textLight,
+                //             fontSize: 14.sp,
+                //             fontWeight: FontWeight.w500,
+                //           ),
+                //         ),
+                //         onPressed: () {
+                //           Get.to(
+                //             LoginScreen(),
+                //             transition: Transition.rightToLeft,
+                //             duration: const Duration(
+                //               milliseconds: 500,
+                //             ),
+                //           );
+                //         },
+                //         color: AppTheme.primary,
+                //       ),
+                StreamBuilder<User?>(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // You can show a loading indicator here
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      // Handle errors
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      final User? user = snapshot.data;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          user != null
+                              ? Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(8.r),
+                                      child: CircleAvatar(
+                                        radius: 50.r,
+                                        backgroundImage: const NetworkImage(
+                                          'https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg',
+                                        ),
+                                      ),
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          WidgetSpan(
+                                            alignment:
+                                                PlaceholderAlignment.middle,
+                                            child: Text(
+                                              'Hello! Its me',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
+                                            ),
+                                          ),
+                                          WidgetSpan(
+                                            alignment:
+                                                PlaceholderAlignment.middle,
+                                            child: Text(
+                                              user.displayName ?? '',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineLarge,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Button(
+                                  width: Get.width * 0.75.w,
+                                  widget: Text(
+                                    'Sign in or Create an account',
+                                    style: GoogleFonts.oxygen(
+                                      color: AppTheme.textLight,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Get.to(
+                                      LoginScreen(),
+                                      transition: Transition.rightToLeft,
+                                      duration: const Duration(
+                                        milliseconds: 500,
+                                      ),
+                                    );
+                                  },
+                                  color: AppTheme.primary,
+                                ),
+                          // ... rest of the profile UI ...
+                        ],
                       );
-                    },
-                    color: AppTheme.primary,
-                  ),
+                    }
+                  },
                 ),
                 SizedBox(height: 12.h),
-                ListTile(
+                ProfileMenuButtonTile(
+                  leadingIcon: Icons.business_center_outlined,
                   onTap: () {},
-                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                  leading: Icon(
-                    Icons.business_center_outlined,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 20.sp,
-                  ),
-                  title: Text(
-                    'My Bookings',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 16.sp,
-                  ),
+                  title: 'My Bookings',
                 ),
-                ListTile(
+                ProfileMenuButtonTile(
+                  leadingIcon: Icons.payments_outlined,
                   onTap: () {},
-                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                  leading: Icon(
-                    Icons.payments_outlined,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 20.sp,
-                  ),
-                  title: Text(
-                    'Payment Settings',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 16.sp,
-                  ),
+                  title: 'Payment Settings',
                 ),
-                ListTile(
+                ProfileMenuButtonTile(
+                  leadingIcon: Icons.temple_buddhist_outlined,
                   onTap: () {
                     Get.to(
                       const MembershipRegistration(),
@@ -141,134 +201,40 @@ class MyProfile extends StatelessWidget {
                       ),
                     );
                   },
-                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                  leading: Icon(
-                    Icons.temple_buddhist_outlined,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 20.sp,
-                  ),
-                  title: Text(
-                    'List your Property',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 16.sp,
-                  ),
+                  title: 'List your Property',
                 ),
-                ListTile(
+                ProfileMenuButtonTile(
+                  leadingIcon: Icons.favorite_border_rounded,
                   onTap: () {},
-                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                  leading: Icon(
-                    Icons.favorite_border_rounded,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 20.sp,
-                  ),
-                  title: Text(
-                    'Wish List',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 16.sp,
-                  ),
+                  title: 'Wish List',
                 ),
-                ListTile(
+                ProfileMenuButtonTile(
+                  leadingIcon: Icons.location_on_outlined,
                   onTap: () {},
-                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                  leading: Icon(
-                    Icons.location_on_outlined,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 20.sp,
-                  ),
-                  title: Text(
-                    'Location',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 16.sp,
-                  ),
+                  title: 'Location',
                 ),
-                ListTile(
+                ProfileMenuButtonTile(
+                  leadingIcon: Icons.settings_outlined,
                   onTap: () {},
-                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                  leading: Icon(
-                    Icons.settings_outlined,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 20.sp,
-                  ),
-                  title: Text(
-                    'Settings',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 16.sp,
-                  ),
+                  title: 'Settings',
                 ),
-                ListTile(
+                ProfileMenuButtonTile(
+                    leadingIcon: Icons.help_outline_outlined,
+                    onTap: () {},
+                    title: 'Help Center'),
+                ProfileMenuButtonTile(
+                  leadingIcon: Icons.star_border_rounded,
                   onTap: () {},
-                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                  leading: Icon(
-                    Icons.help_outline_outlined,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 20.sp,
-                  ),
-                  title: Text(
-                    'Help Center',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 16.sp,
-                  ),
+                  title: 'Rate our app',
                 ),
-                ListTile(
-                  onTap: () {},
-                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                  leading: Icon(
-                    Icons.star_border_rounded,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 20.sp,
-                  ),
-                  title: Text(
-                    'Rate our app',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 16.sp,
-                  ),
-                ),
-                ListTile(
-                  onTap: () {},
-                  contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
-                  leading: Icon(
-                    Icons.admin_panel_settings_outlined,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 20.sp,
-                  ),
-                  title: Text(
-                    'Privacy Policy',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).colorScheme.surface,
-                    size: 16.sp,
-                  ),
-                ),
+                ProfileMenuButtonTile(
+                    leadingIcon: Icons.admin_panel_settings_outlined,
+                    onTap: () {},
+                    title: 'Privacy Policy'),
                 auth.currentUser != null
                     ? ListTile(
                         onTap: () {
-                          SocialAuth.signOut();
+                          SocialAuth().signOut();
                         },
                         contentPadding: EdgeInsets.only(left: 12.w, right: 8.w),
                         leading: Icon(

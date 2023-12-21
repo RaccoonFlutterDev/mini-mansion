@@ -2,7 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mini_mansion/constant/variables.dart';
 import 'package:http/http.dart' as http;
@@ -33,8 +36,7 @@ class Functions {
     });
   }
 
-
-   static Future<Map<String, dynamic>> fetchLocationFromPlaceId(
+  static Future<Map<String, dynamic>> fetchLocationFromPlaceId(
       String placeId, String apiKey) async {
     final url = Uri.parse(
         'https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&key=$apiKey');
@@ -60,4 +62,38 @@ void showMessage(String message) {
       backgroundColor: Colors.red,
       textColor: Colors.white,
       fontSize: 16.0);
+}
+
+void showSnackbarMsg(String titleText, String messageText) {
+  Get.showSnackbar(
+    GetSnackBar(
+      titleText: Text(
+        titleText,
+        style: Get.context!.textTheme.titleMedium,
+      ),
+      messageText: Text(
+        messageText,
+        style: Get.context!.textTheme.bodyMedium,
+      ),
+      mainButton: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: SvgPicture.asset(
+          'assets/icons/congratulation.svg',
+          width: 24.w,
+          height: 24.h,
+        ),
+      ),
+      shouldIconPulse: true,
+      snackStyle: SnackStyle.GROUNDED,
+      boxShadows: [
+        BoxShadow(
+          offset: const Offset(0, 0),
+          blurRadius: 4,
+          spreadRadius: 0.5,
+          color: Colors.grey.shade100,
+        )
+      ],
+      duration: const Duration(seconds: 2),
+    ),
+  );
 }

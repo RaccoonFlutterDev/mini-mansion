@@ -14,6 +14,7 @@ class FirebaseCRUD {
   Future<void> create({required Map<String, dynamic> body}) async {
     final CollectionReference usersCollection =
         FirebaseFirestore.instance.collection(collectionPath);
+    final refId = usersCollection.doc().id;    
     try {
       await usersCollection.doc(body["uid"]).set(body);
       Get.showSnackbar(

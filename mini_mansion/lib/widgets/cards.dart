@@ -6,6 +6,8 @@ import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/constant/variables.dart';
+import 'package:mini_mansion/controller/app_controller.dart';
 import 'package:mini_mansion/model/membership_model.dart';
 import 'package:mini_mansion/widgets/button.dart';
 import 'package:readmore/readmore.dart';
@@ -20,7 +22,7 @@ class LargeCard extends StatelessWidget {
   // final String imageUrl;
   final MembershipModel membershipModel;
 
-  LargeCard({
+  const LargeCard({
     super.key,
     required this.onPressed,
     required this.width,
@@ -32,7 +34,8 @@ class LargeCard extends StatelessWidget {
     // mem
   });
 
-  var isFavorite = false.obs;
+  // var isFavorite = false.obs;
+  // AppController appController = Get.put(AppController());
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -88,32 +91,36 @@ class LargeCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            Positioned(
-              top: 8.h,
-              right: 8.w,
-              child: Obx(
-                () {
-                  return Button(
-                    width: 25.w,
-                    height: 25.w,
-                    borderRadius: 25.r,
-                    widget: Icon(
-                      isFavorite.value
-                          ? Icons.favorite_rounded
-                          : Icons.favorite_outline_rounded,
-                      size: 18.sp,
-                      color: Theme.of(context).colorScheme.tertiary,
-                    ),
-                    onPressed: () {
-                      isFavorite.value = !isFavorite.value;
-                    },
-                    color: Theme.of(context)
-                        .scaffoldBackgroundColor
-                        .withOpacity(0.75),
-                  );
-                },
-              ),
-            ),
+            GetBuilder<AppController>(builder: (controller) {
+              return Positioned(
+                top: 8.h,
+                right: 8.w,
+                child: Button(
+                  width: 25.w,
+                  height: 25.w,
+                  borderRadius: 25.r,
+                  widget: Icon(
+                    (controller.getFavMemberships.contains(membershipModel))
+                        ? Icons.favorite_rounded
+                        : Icons.favorite_outline_rounded,
+                    size: 18.sp,
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
+                  onPressed: () {
+                    // isFavorite.value = !isFavorite.value;
+                    if (controller.getFavMemberships
+                        .contains(membershipModel)) {
+                      controller.removeFavouriteMembership(membershipModel);
+                    } else {
+                      controller.addFavouriteMembership(membershipModel);
+                    }
+                  },
+                  color: Theme.of(context)
+                      .scaffoldBackgroundColor
+                      .withOpacity(0.75),
+                ),
+              );
+            }),
             Positioned(
               bottom: 0,
               left: 0,

@@ -1,16 +1,13 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/constant/variables.dart';
 import 'package:mini_mansion/controller/auth_controller.dart';
 import 'package:mini_mansion/widgets/button.dart';
-import 'package:mini_mansion/widgets/social_button.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -85,27 +82,9 @@ class LoginScreen extends StatelessWidget {
                               hintText: 'Jhon Doe',
                               hintStyle: Theme.of(context).textTheme.labelSmall,
                               alignLabelWithHint: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: BorderSide(
-                                  width: 1.w,
-                                  color: AppTheme.textHint,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: BorderSide(
-                                  width: 1.w,
-                                  color: AppTheme.textHint,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: BorderSide(
-                                  width: 1.w,
-                                  color: AppTheme.primary,
-                                ),
-                              ),
+                              border: enabledBorder,
+                              enabledBorder: enabledBorder,
+                              focusedBorder: focusedBorder,
                             ),
                           ),
                         ),
@@ -146,27 +125,9 @@ class LoginScreen extends StatelessWidget {
                           hintText: 'example@mail.com',
                           hintStyle: Theme.of(context).textTheme.labelSmall,
                           alignLabelWithHint: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.r),
-                            borderSide: BorderSide(
-                              width: 1.w,
-                              color: AppTheme.textHint,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.r),
-                            borderSide: BorderSide(
-                              width: 1.w,
-                              color: AppTheme.textHint,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.r),
-                            borderSide: BorderSide(
-                              width: 1.w,
-                              color: AppTheme.primary,
-                            ),
-                          ),
+                          border: enabledBorder,
+                          enabledBorder: enabledBorder,
+                          focusedBorder: focusedBorder,
                         ),
                       ),
                     ),
@@ -208,27 +169,9 @@ class LoginScreen extends StatelessWidget {
                               hintText: '+92-3XX-XXXXXXX',
                               hintStyle: Theme.of(context).textTheme.labelSmall,
                               alignLabelWithHint: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: BorderSide(
-                                  width: 1.w,
-                                  color: AppTheme.textHint,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: BorderSide(
-                                  width: 1.w,
-                                  color: AppTheme.textHint,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: BorderSide(
-                                  width: 1.w,
-                                  color: AppTheme.primary,
-                                ),
-                              ),
+                              border: enabledBorder,
+                              enabledBorder: enabledBorder,
+                              focusedBorder: focusedBorder,
                             ),
                           ),
                         ),
@@ -282,27 +225,9 @@ class LoginScreen extends StatelessWidget {
                                 isVisible.value = !isVisible.value;
                               },
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.r),
-                              borderSide: BorderSide(
-                                width: 1.w,
-                                color: AppTheme.textHint,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.r),
-                              borderSide: BorderSide(
-                                width: 1.w,
-                                color: AppTheme.textHint,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.r),
-                              borderSide: BorderSide(
-                                width: 1.w,
-                                color: AppTheme.primary,
-                              ),
-                            ),
+                            border: enabledBorder,
+                            enabledBorder: enabledBorder,
+                            focusedBorder: focusedBorder,
                           ),
                         );
                       }),
@@ -348,10 +273,10 @@ class LoginScreen extends StatelessWidget {
                       ),
                       onPressed: isSignUp.value
                           ? () {
-                              SocialAuth.signUpWithEmail(body: body);
+                              SocialAuth().signUpWithEmail(body: body);
                             }
                           : () {
-                              SocialAuth.signInWithEmail(body: body);
+                              SocialAuth().signInWithEmail(body: body);
                             },
                       color: AppTheme.primary,
                     ),
@@ -393,107 +318,6 @@ class LoginScreen extends StatelessWidget {
                     ),
                   );
                 }),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Divider(
-                        endIndent: 10.w,
-                        indent: 10.w,
-                        thickness: 0.5.sp,
-                        color: AppTheme.textHint.withOpacity(0.5),
-                      ),
-                    ),
-                    Text(
-                      'or',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Divider(
-                        endIndent: 10.w,
-                        indent: 10.w,
-                        thickness: 0.5.sp,
-                        color: AppTheme.textHint.withOpacity(0.5),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SocialLoginButton(
-                          icon: Icon(
-                            Icons.facebook,
-                            color: AppTheme.textLight,
-                            size: 24.sp,
-                          ),
-                          title: Text(
-                            'Continue With Facebook',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.sp,
-                              fontFamily: 'Poppins',
-                              color: AppTheme.textLight,
-                            ),
-                          ),
-                          onPressed: () async {
-                            await SocialAuth.signInWithFacebook();
-                          },
-                          color: const Color(0xFF487ae1),
-                        ),
-                        SocialLoginButton(
-                          icon: SvgPicture.asset(
-                            'assets/icons/google.svg',
-                            width: 24.w,
-                          ),
-                          title: Text(
-                            'Continue With Google',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.sp,
-                              fontFamily: 'Poppins',
-                              color: AppTheme.textDark,
-                            ),
-                          ),
-                          onPressed: () async {
-                            await SocialAuth.signInWithGoogle();
-                          },
-                          color: const Color(0xFFFFFFFF),
-                        ),
-                        if (Platform.isIOS)
-                          SocialLoginButton(
-                            icon: Icon(
-                              Icons.apple_outlined,
-                              color: AppTheme.textLight,
-                              size: 24.sp,
-                            ),
-                            title: Text(
-                              'Continue With Apple',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14.sp,
-                                fontFamily: 'Poppins',
-                                color: AppTheme.textLight,
-                              ),
-                            ),
-                            onPressed: () async {
-                              await SocialAuth.signInWithApple();
-                            },
-                            color: const Color(0xFF000000),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

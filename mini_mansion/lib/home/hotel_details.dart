@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/controller/app_controller.dart';
 import 'package:mini_mansion/model/membership_model.dart';
 import 'package:mini_mansion/widgets/button.dart';
 import 'package:mini_mansion/widgets/cards.dart';
@@ -19,7 +20,8 @@ class HotelDetails extends StatefulWidget {
   // final String imageUrl;
   final MembershipModel membershipModel;
 
-  const HotelDetails({super.key, required this.membershipModel});
+  const HotelDetails(
+      {super.key, required this.membershipModel});
 
   @override
   State<HotelDetails> createState() => _HotelDetailsState();
@@ -31,7 +33,7 @@ class _HotelDetailsState extends State<HotelDetails> {
     zoom: 16,
   );
 
-  var isFavorite = false.obs;
+  // var isFavorite = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -56,29 +58,32 @@ class _HotelDetailsState extends State<HotelDetails> {
       ),
       title: const SizedBox.shrink(),
       actions: [
-        Obx(
-          () {
-            return Padding(
-              padding: EdgeInsets.all(8.r),
-              child: Button(
-                width: 38.w,
-                height: 38.w,
-                borderRadius: 38.r,
-                widget: Icon(
-                  isFavorite.value
-                      ? Icons.favorite_rounded
-                      : Icons.favorite_outline_rounded,
-                  size: 18.sp,
-                  color: AppTheme.textLight,
-                ),
-                onPressed: () {
-                  isFavorite.value = !isFavorite.value;
-                },
-                color: Theme.of(context).primaryColor.withOpacity(0.75),
+        GetBuilder<AppController>(builder: (controller) {
+          return Padding(
+            padding: EdgeInsets.all(8.r),
+            child: Button(
+              width: 38.w,
+              height: 38.w,
+              borderRadius: 38.r,
+              widget: Icon(
+                (controller.getFavMemberships.contains(widget.membershipModel))
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_outline_rounded,
+                size: 18.sp,
+                color: AppTheme.textLight,
               ),
-            );
-          },
-        ),
+              onPressed: () {
+                if (controller.getFavMemberships
+                    .contains(widget.membershipModel)) {
+                  controller.removeFavouriteMembership(widget.membershipModel);
+                } else {
+                  controller.addFavouriteMembership(widget.membershipModel);
+                }
+              },
+              color: Theme.of(context).primaryColor.withOpacity(0.75),
+            ),
+          );
+        })
       ],
       headerWidget: headerWidget(context),
       body: [

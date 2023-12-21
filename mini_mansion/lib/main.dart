@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_mansion/constant/functions.dart';
 import 'package:mini_mansion/constant/theme.dart';
+import 'package:mini_mansion/controller/app_controller.dart';
+import 'package:mini_mansion/controller/auth_controller.dart';
 import 'package:mini_mansion/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constant/variables.dart';
@@ -44,6 +46,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           title: 'Mini Mansion',
+          initialBinding: BindingsBuilder(() {
+            Get.put(SocialAuth());
+          }),
           builder: (context, child) {
             return MediaQuery(
               data: MediaQuery.of(context)

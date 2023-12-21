@@ -12,6 +12,7 @@ String membershipModelToJson(MembershipModel data) =>
 
 class MembershipModel {
   String uid;
+  String membershipId;
   String propertyType;
   String accommodates;
   String bedrooms;
@@ -40,6 +41,7 @@ class MembershipModel {
   MembershipModel({
     required this.uid,
     required this.propertyType,
+    required this.membershipId,
     required this.accommodates,
     required this.bedrooms,
     required this.streetAddress,
@@ -68,6 +70,7 @@ class MembershipModel {
   factory MembershipModel.fromJson(Map<String, dynamic> json) =>
       MembershipModel(
         uid: json['uid'],
+        membershipId: json['membershipId'],
         propertyType: json["propertyType"],
         accommodates: json["accommodates"],
         bedrooms: json["bedrooms"],
@@ -97,6 +100,7 @@ class MembershipModel {
   Map<String, dynamic> toJson() => {
         "uid": uid,
         "propertyType": propertyType,
+        "membershipId":membershipId,
         "accommodates": accommodates,
         "bedrooms": bedrooms,
         "streetAddress": streetAddress,
